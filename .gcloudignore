@@ -1,0 +1,20 @@
+# Exclude local directories and files from Google Cloud Build
+.git
+.gitignore
+.gcloudignore
+.dockerignore
+node_modules
+.next
+.firebase
+.env*
+coverage
+__tests__
+*.test.ts
+*.spec.ts
+playwright.config.ts
+jest.config.ts
+README.md
+CarbonDetox_WinningPlan.md
+firebase-debug.log
+.DS_Store
+Thumbs.db
