@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <rect width="192" height="192" rx="40" fill="#0f172a"/>
+  <rect width="192" height="192" rx="40" fill="#16a34a" opacity="0.15"/>
+  <!-- Leaf icon centered -->
+  <path d="M96 36 C96 36 52 72 52 108 C52 132 72 148 96 148 C120 148 140 132 140 108 C140 72 96 36 96 36Z" fill="#16a34a"/>
+  <path d="M96 148 L96 80 M96 80 C96 80 76 96 68 112" stroke="#0f172a" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <circle cx="96" cy="36" r="6" fill="#22c55e"/>
+</svg>

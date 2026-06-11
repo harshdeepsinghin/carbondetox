@@ -62,5 +62,5 @@ export async function analyzeReceipt(
   if ('error' in parsed) return null;
 
   // Basic shape validation — full schema not needed here as Gemini is constrained
-  return parsed as ReceiptAnalysis;
+  return parsed as unknown as ReceiptAnalysis;
 }

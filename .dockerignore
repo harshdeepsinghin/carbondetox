@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+.gitignore
+.env*
+coverage
+__tests__
+*.test.ts
+*.spec.ts
+playwright.config.ts
+jest.config.ts
+README.md
+CarbonDetox_WinningPlan.md
+.firebase/
+firebase-debug.log
+.DS_Store
+Thumbs.db
