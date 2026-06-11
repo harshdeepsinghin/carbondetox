@@ -1,6 +1,5 @@
 'use client';
 
-import type { Metadata } from 'next';
 import { ChatInterface } from '@/components/coach/ChatInterface';
 import { useUserStore } from '@/stores/userStore';
 

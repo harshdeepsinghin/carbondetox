@@ -66,7 +66,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     await saveMissions(userMissions);
 
     return NextResponse.json({ missions: userMissions });
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to generate missions. Please try again.' },
       { status: 500 },

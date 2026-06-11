@@ -88,7 +88,6 @@ function OptionCard<T extends string>({
 // ─── Main Stepper ─────────────────────────────────────────────────────────────
 
 export function AssessmentStepper({
-  uid,
   onComplete,
   initialValues = {},
 }: AssessmentStepperProps) {

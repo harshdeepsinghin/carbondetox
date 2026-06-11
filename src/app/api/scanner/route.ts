@@ -86,7 +86,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     });
 
     return NextResponse.json({ analysis, imageUrl: downloadUrl });
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { error: 'Scanner temporarily unavailable. Please try again.' },
       { status: 500 },

@@ -68,7 +68,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     });
 
     return NextResponse.json({ reply });
-  } catch (err) {
+  } catch {
     // Don't leak internal errors to client
     return NextResponse.json(
       { error: 'Coach is temporarily unavailable. Please try again.' },
