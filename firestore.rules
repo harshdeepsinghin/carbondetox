@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users collection — own documents only
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // User profiles — own documents only
+    match /profiles/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Carbon scores — read own, create own (no update/delete)
+    match /carbon_scores/{docId} {
+      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // User missions — full own-document access
+    match /user_missions/{docId} {
+      allow read, write: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+    }
+
+    // Chat history — full own-document access
+    match /chat_history/{docId} {
+      allow read, write: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+    }
+
+    // Receipts — full own-document access
+    match /receipts/{docId} {
+      allow read, write: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+    }
+
+    // Rate limits — authenticated read/write (keyed by uid+action+date)
+    match /rate_limits/{docId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Global missions library — read only for authenticated users
+    match /missions/{missionId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+  }
+}
