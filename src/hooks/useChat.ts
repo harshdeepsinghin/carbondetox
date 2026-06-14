@@ -71,7 +71,14 @@ export function useChat(): UseChatReturn {
         }
 
         if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
+          let errMsg = `HTTP ${res.status}`;
+          try {
+            const errData = await res.json() as { error?: string };
+            if (errData?.error) {
+              errMsg = errData.error;
+            }
+          } catch {}
+          throw new Error(errMsg);
         }
 
         const data = await res.json() as { reply: string };
@@ -86,12 +93,12 @@ export function useChat(): UseChatReturn {
         debouncedPersist(assistantMessage);
 
         return data.reply;
-      } catch {
+      } catch (error: unknown) {
+        const errorText = error instanceof Error ? error.message : "I'm having trouble connecting right now. Please try again in a moment. 🌿";
         const errorMessage: ChatMessage = {
           id: `msg-${Date.now()}-error`,
           role: 'assistant',
-          content:
-            "I'm having trouble connecting right now. Please try again in a moment. 🌿",
+          content: errorText,
           timestamp: new Date().toISOString(),
         };
         addChatMessage(errorMessage);

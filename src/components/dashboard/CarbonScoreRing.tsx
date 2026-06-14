@@ -97,7 +97,6 @@ export function CarbonScoreRing({
           }}
         />
 
-        {/* Score text */}
         <text
           x={center}
           y={center - 8}
@@ -106,7 +105,8 @@ export function CarbonScoreRing({
           fontSize={size * 0.2}
           fontWeight="800"
           fontFamily="'Inter', monospace"
-          fill="white"
+          fill="currentColor"
+          className="text-[var(--color-text-primary)]"
         >
           {score}
         </text>
@@ -119,7 +119,8 @@ export function CarbonScoreRing({
           dominantBaseline="middle"
           fontSize={size * 0.07}
           fontWeight="500"
-          fill="rgba(148,163,184,0.8)"
+          fill="currentColor"
+          className="text-[var(--color-text-secondary)]"
         >
           / 100
         </text>
