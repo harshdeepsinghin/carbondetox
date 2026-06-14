@@ -12,7 +12,10 @@ if (getApps().length === 0) {
       storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
     });
   } catch (err) {
-    console.warn('Failed to initialize Firebase Admin with applicationDefault, falling back:', err);
+    console.warn(
+      'Failed to initialize Firebase Admin with applicationDefault, falling back:',
+      err,
+    );
     app = initializeApp({
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
       storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,

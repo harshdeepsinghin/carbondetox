@@ -8,12 +8,7 @@ export type ShoppingFrequency = 'rarely' | 'monthly' | 'weekly' | 'daily';
 export type RecyclingHabit = 'always' | 'sometimes' | 'never';
 export type LocationType = 'urban' | 'suburban' | 'rural';
 export type MissionDifficulty = 'easy' | 'medium' | 'hard';
-export type MissionCategory =
-  | 'transport'
-  | 'food'
-  | 'energy'
-  | 'shopping'
-  | 'waste';
+export type MissionCategory = 'transport' | 'food' | 'energy' | 'shopping' | 'waste';
 export type ChatRole = 'user' | 'assistant';
 
 // ─── Core Domain Interfaces ───────────────────────────────────────────────────

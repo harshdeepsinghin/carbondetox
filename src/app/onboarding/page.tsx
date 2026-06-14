@@ -6,10 +6,7 @@ import { Leaf } from 'lucide-react';
 import { AssessmentStepper } from '@/components/onboarding/AssessmentStepper';
 import { useAuth } from '@/hooks/useAuth';
 import { useUserStore } from '@/stores/userStore';
-import {
-  saveProfile,
-  saveCarbonScore,
-} from '@/lib/firebase/firestore';
+import { saveProfile, saveCarbonScore } from '@/lib/firebase/firestore';
 import { calculateCarbonScore } from '@/lib/scoring/carbonScore';
 import type { UserProfile } from '@/types';
 import { toast } from 'sonner';
@@ -59,8 +56,16 @@ export default function OnboardingPage() {
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--color-surface)' }}>
-        <div role="status" aria-live="polite" className="flex items-center gap-3" style={{ color: 'var(--color-text-muted)' }}>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: 'var(--color-surface)' }}
+      >
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex items-center gap-3"
+          style={{ color: 'var(--color-text-muted)' }}
+        >
           <Leaf className="w-5 h-5 animate-pulse" aria-hidden="true" />
           Loading...
         </div>
@@ -78,7 +83,8 @@ export default function OnboardingPage() {
         className="fixed inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse 70% 40% at 50% 0%, rgba(22,163,74,0.07) 0%, transparent 60%)',
+          background:
+            'radial-gradient(ellipse 70% 40% at 50% 0%, rgba(22,163,74,0.07) 0%, transparent 60%)',
         }}
       />
 
@@ -93,20 +99,19 @@ export default function OnboardingPage() {
             <Leaf className="w-7 h-7" style={{ color: 'var(--color-forest-light)' }} />
           </div>
           <h1 className="text-3xl font-bold mb-2">
-            Let&apos;s build your{' '}
-            <span className="gradient-text">Carbon Profile</span>
+            Let&apos;s build your <span className="gradient-text">Carbon Profile</span>
           </h1>
           <p style={{ color: 'var(--color-text-muted)' }}>
             Answer 6 quick questions to get your personalised carbon health score
           </p>
         </header>
 
-        <AssessmentStepper
-          uid={user.uid}
-          onComplete={handleOnboardingComplete}
-        />
+        <AssessmentStepper uid={user.uid} onComplete={handleOnboardingComplete} />
 
-        <p className="text-center text-xs mt-8" style={{ color: 'var(--color-text-muted)' }}>
+        <p
+          className="text-center text-xs mt-8"
+          style={{ color: 'var(--color-text-muted)' }}
+        >
           Your data is private and stored securely. We never sell or share it.
         </p>
       </div>

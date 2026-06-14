@@ -80,10 +80,7 @@ export function CategoryCard({ category, score, className = '' }: CategoryCardPr
           <span className="font-semibold text-sm">{config.label}</span>
         </div>
         <div className="flex items-center gap-1">
-          <span
-            className="font-mono font-bold text-lg"
-            style={{ color: config.color }}
-          >
+          <span className="font-mono font-bold text-lg" style={{ color: config.color }}>
             {score}
           </span>
           <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
@@ -116,7 +113,11 @@ export function CategoryCard({ category, score, className = '' }: CategoryCardPr
 
       {/* Assessment text + icon */}
       <div className="flex items-center gap-1.5">
-        <Zap className="w-3 h-3 shrink-0" style={{ color: assessment.color }} aria-hidden="true" />
+        <Zap
+          className="w-3 h-3 shrink-0"
+          style={{ color: assessment.color }}
+          aria-hidden="true"
+        />
         <span className="text-xs font-medium" style={{ color: assessment.color }}>
           {assessment.label}
         </span>

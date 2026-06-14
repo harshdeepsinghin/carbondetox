@@ -44,9 +44,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ score: freshScore });
   } catch {
-    return NextResponse.json(
-      { error: 'Could not compute score.' },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: 'Could not compute score.' }, { status: 500 });
   }
 }

@@ -47,11 +47,14 @@ export default function ScannerPage() {
     reader.readAsDataURL(f);
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    const f = e.dataTransfer.files[0];
-    if (f) handleFile(f);
-  }, [handleFile]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      const f = e.dataTransfer.files[0];
+      if (f) handleFile(f);
+    },
+    [handleFile],
+  );
 
   const handleAnalyze = useCallback(async () => {
     if (!file || !userData?.uid || isGuest) return;
@@ -74,12 +77,12 @@ export default function ScannerPage() {
       }
 
       if (!res.ok) {
-        const data = await res.json() as { error: string };
+        const data = (await res.json()) as { error: string };
         setError(data.error ?? 'Analysis failed');
         return;
       }
 
-      const data = await res.json() as { analysis: ReceiptAnalysis };
+      const data = (await res.json()) as { analysis: ReceiptAnalysis };
       setAnalysis(data.analysis);
       setScansUsed((prev) => prev + 1);
     } catch {
@@ -89,7 +92,9 @@ export default function ScannerPage() {
     }
   }, [file, userData, isGuest]);
 
-  const gradeColor = analysis ? GRADE_COLORS[analysis.overallScore] ?? '#64748b' : '#64748b';
+  const gradeColor = analysis
+    ? (GRADE_COLORS[analysis.overallScore] ?? '#64748b')
+    : '#64748b';
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -123,7 +128,11 @@ export default function ScannerPage() {
           className="flex items-center gap-2 text-sm px-4 py-2 rounded-xl"
           style={{ background: 'rgba(255,255,255,0.04)' }}
         >
-          <ScanLine className="w-4 h-4" aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />
+          <ScanLine
+            className="w-4 h-4"
+            aria-hidden="true"
+            style={{ color: 'var(--color-text-muted)' }}
+          />
           <span style={{ color: 'var(--color-text-muted)' }}>
             {scansUsed}/{SCAN_LIMIT} scans used today
           </span>
@@ -143,7 +152,10 @@ export default function ScannerPage() {
           aria-label="Upload receipt image"
         >
           {preview ? (
-            <div className="relative w-full max-w-xs mx-auto" style={{ aspectRatio: '3/4' }}>
+            <div
+              className="relative w-full max-w-xs mx-auto"
+              style={{ aspectRatio: '3/4' }}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={preview}
@@ -158,7 +170,10 @@ export default function ScannerPage() {
                 style={{ background: 'rgba(22,163,74,0.1)' }}
                 aria-hidden="true"
               >
-                <Upload className="w-7 h-7" style={{ color: 'var(--color-forest-light)' }} />
+                <Upload
+                  className="w-7 h-7"
+                  style={{ color: 'var(--color-forest-light)' }}
+                />
               </div>
               <div className="text-center">
                 <p className="font-semibold">Drop your receipt here</p>
@@ -228,7 +243,9 @@ export default function ScannerPage() {
       {/* Results */}
       {analysis && (
         <section aria-labelledby="results-heading" className="space-y-5">
-          <h2 id="results-heading" className="font-bold text-lg">Analysis Results</h2>
+          <h2 id="results-heading" className="font-bold text-lg">
+            Analysis Results
+          </h2>
 
           {/* Overall grade */}
           <div
@@ -304,11 +321,17 @@ export default function ScannerPage() {
                 {analysis.swapSuggestions.map((swap, i) => (
                   <div key={i} className="glass-card p-4 space-y-1">
                     <div className="flex gap-2 text-sm">
-                      <span className="line-through" style={{ color: 'var(--color-text-muted)' }}>
+                      <span
+                        className="line-through"
+                        style={{ color: 'var(--color-text-muted)' }}
+                      >
                         {swap.instead}
                       </span>
                       <span aria-hidden="true">→</span>
-                      <span className="font-semibold" style={{ color: 'var(--color-forest-light)' }}>
+                      <span
+                        className="font-semibold"
+                        style={{ color: 'var(--color-forest-light)' }}
+                      >
                         {swap.try}
                       </span>
                     </div>
@@ -325,13 +348,19 @@ export default function ScannerPage() {
           {analysis.positives.length > 0 && (
             <div>
               <h3 className="font-semibold mb-3 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4" style={{ color: '#22c55e' }} aria-hidden="true" />
+                <CheckCircle2
+                  className="w-4 h-4"
+                  style={{ color: '#22c55e' }}
+                  aria-hidden="true"
+                />
                 What You Did Well
               </h3>
               <ul className="space-y-2">
                 {analysis.positives.map((pos, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm">
-                    <span style={{ color: '#22c55e' }} aria-hidden="true">✓</span>
+                    <span style={{ color: '#22c55e' }} aria-hidden="true">
+                      ✓
+                    </span>
                     <span style={{ color: 'var(--color-text-secondary)' }}>{pos}</span>
                   </li>
                 ))}

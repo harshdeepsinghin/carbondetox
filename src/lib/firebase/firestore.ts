@@ -85,10 +85,7 @@ export async function saveCarbonScore(score: CarbonScore): Promise<void> {
  * Fetch the last N carbon score documents for a user.
  * Returns them sorted newest first.
  */
-export async function getCarbonScores(
-  uid: string,
-  count = 30,
-): Promise<CarbonScore[]> {
+export async function getCarbonScores(uid: string, count = 30): Promise<CarbonScore[]> {
   const q = query(
     collection(db, COLLECTIONS.CARBON_SCORES),
     where('uid', '==', uid),
@@ -100,9 +97,7 @@ export async function getCarbonScores(
 }
 
 /** Fetch the most recent carbon score for a user, or null. */
-export async function getLatestCarbonScore(
-  uid: string,
-): Promise<CarbonScore | null> {
+export async function getLatestCarbonScore(uid: string): Promise<CarbonScore | null> {
   const scores = await getCarbonScores(uid, 1);
   return scores.length > 0 ? scores[0] : null;
 }
@@ -117,10 +112,7 @@ export async function saveMissions(missions: UserMission[]): Promise<void> {
 }
 
 /** Fetch today's missions for a user. */
-export async function getMissions(
-  uid: string,
-  date: string,
-): Promise<UserMission[]> {
+export async function getMissions(uid: string, date: string): Promise<UserMission[]> {
   const q = query(
     collection(db, COLLECTIONS.USER_MISSIONS),
     where('uid', '==', uid),
@@ -153,10 +145,7 @@ export async function completeMission(
 // ─── Chat History ─────────────────────────────────────────────────────────────
 
 /** Save a single chat message. */
-export async function saveChatMessage(
-  uid: string,
-  message: ChatMessage,
-): Promise<void> {
+export async function saveChatMessage(uid: string, message: ChatMessage): Promise<void> {
   await addDoc(collection(db, COLLECTIONS.CHAT_HISTORY), {
     uid,
     ...message,
@@ -164,10 +153,7 @@ export async function saveChatMessage(
 }
 
 /** Fetch the last N chat messages for a user, sorted oldest first. */
-export async function getChatHistory(
-  uid: string,
-  count = 20,
-): Promise<ChatMessage[]> {
+export async function getChatHistory(uid: string, count = 20): Promise<ChatMessage[]> {
   const q = query(
     collection(db, COLLECTIONS.CHAT_HISTORY),
     where('uid', '==', uid),

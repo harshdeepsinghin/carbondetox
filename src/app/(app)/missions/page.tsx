@@ -11,7 +11,7 @@ export default function MissionsPage() {
 
   useEffect(() => {
     if (userData?.uid) loadMissions(userData.uid);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?.uid]);
 
   const today = new Date().toLocaleDateString('en-IN', {
@@ -28,23 +28,33 @@ export default function MissionsPage() {
     <div className="space-y-6">
       <header>
         <h1 className="text-2xl font-bold mb-1">Today&apos;s Missions</h1>
-        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{today}</p>
+        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          {today}
+        </p>
       </header>
 
       {/* Progress */}
       {missions.length > 0 && !loading && (
         <div
           className="flex items-center gap-4 p-4 rounded-xl"
-          style={{ background: 'rgba(22,163,74,0.08)', border: '1px solid rgba(22,163,74,0.15)' }}
+          style={{
+            background: 'rgba(22,163,74,0.08)',
+            border: '1px solid rgba(22,163,74,0.15)',
+          }}
         >
           <div
             className="flex flex-col"
             aria-label={`${completedCount} of ${missions.length} missions completed today`}
           >
-            <span className="font-bold text-2xl" style={{ color: 'var(--color-forest-light)' }}>
+            <span
+              className="font-bold text-2xl"
+              style={{ color: 'var(--color-forest-light)' }}
+            >
               {completedCount}/{missions.length}
             </span>
-            <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>completed today</span>
+            <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+              completed today
+            </span>
           </div>
           <div className="flex-1">
             <div
@@ -77,7 +87,8 @@ export default function MissionsPage() {
           }}
           role="note"
         >
-          🔒 You&apos;re viewing as a guest. Sign in to unlock all 3 missions and save progress.
+          🔒 You&apos;re viewing as a guest. Sign in to unlock all 3 missions and save
+          progress.
         </div>
       )}
 

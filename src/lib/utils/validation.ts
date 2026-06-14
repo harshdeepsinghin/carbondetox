@@ -19,9 +19,7 @@ export const CoachRequestSchema = z.object({
     .string()
     .min(1, 'Message cannot be empty')
     .max(500, 'Message too long (max 500 chars)'),
-  history: z
-    .array(ChatHistoryItemSchema)
-    .max(20, 'History too long (max 20 items)'),
+  history: z.array(ChatHistoryItemSchema).max(20, 'History too long (max 20 items)'),
   uid: UidSchema,
 });
 
@@ -67,11 +65,7 @@ export const GeneratedMissionsSchema = z.array(MissionSchema).min(1).max(5);
 
 // ─── File Upload Schemas ──────────────────────────────────────────────────────
 
-export const ALLOWED_IMAGE_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-] as const;
+export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;
 
 export const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
 

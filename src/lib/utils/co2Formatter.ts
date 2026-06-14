@@ -50,7 +50,7 @@ export function formatCO2(kg: number): string {
   }
 
   const flights = Math.round(kg / 255);
-  return `like ${flights} domestic flight${flights !== 1 ? 's' : ''}`;
+  return `like ${flights} domestic flights`;
 }
 
 /**

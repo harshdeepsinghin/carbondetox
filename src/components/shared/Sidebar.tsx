@@ -44,7 +44,10 @@ export function Sidebar() {
       aria-label="Main navigation"
     >
       {/* Logo + Theme Toggle */}
-      <div className="p-4 border-b flex items-center justify-between" style={{ borderColor: 'var(--color-border)' }}>
+      <div
+        className="p-4 border-b flex items-center justify-between"
+        style={{ borderColor: 'var(--color-border)' }}
+      >
         <Link
           href="/dashboard"
           className="flex items-center gap-2 no-underline"
@@ -73,9 +76,7 @@ export function Sidebar() {
               aria-current={isActive ? 'page' : undefined}
               className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium"
               style={{
-                background: isActive
-                  ? 'rgba(22, 163, 74, 0.15)'
-                  : 'transparent',
+                background: isActive ? 'rgba(22, 163, 74, 0.15)' : 'transparent',
                 color: isActive
                   ? 'var(--color-forest-light)'
                   : 'var(--color-text-secondary)',
@@ -126,7 +127,10 @@ export function Sidebar() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-medium text-sm truncate">{userData.name}</p>
-              <p className="text-xs truncate" style={{ color: 'var(--color-text-muted)' }}>
+              <p
+                className="text-xs truncate"
+                style={{ color: 'var(--color-text-muted)' }}
+              >
                 {userData.isAnonymous ? 'Guest' : userData.email}
               </p>
             </div>

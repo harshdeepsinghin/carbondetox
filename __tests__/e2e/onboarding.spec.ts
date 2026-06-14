@@ -7,7 +7,9 @@ import { test, expect } from '@playwright/test';
  * Anonymous sign-in must be enabled in the Firebase Console.
  */
 test.describe('Guest Onboarding Flow', () => {
-  test('1. Guest can complete onboarding and see dashboard score ring', async ({ page }) => {
+  test('1. Guest can complete onboarding and see dashboard score ring', async ({
+    page,
+  }) => {
     // Navigate to landing page
     await page.goto('/');
     await expect(page).toHaveTitle(/CarbonDetox/);
@@ -41,9 +43,9 @@ test.describe('Guest Onboarding Flow', () => {
     await page.waitForURL(/\/dashboard/, { timeout: 20000 });
 
     // Assert score ring is visible
-    await expect(
-      page.getByRole('img', { name: /Carbon Health Score/i }),
-    ).toBeVisible({ timeout: 10000 });
+    await expect(page.getByRole('img', { name: /Carbon Health Score/i })).toBeVisible({
+      timeout: 10000,
+    });
   });
 
   test('2. Missions page shows mission cards after onboarding', async ({ page }) => {

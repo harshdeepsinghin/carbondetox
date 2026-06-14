@@ -25,11 +25,10 @@ interface TooltipProps {
 function CustomTooltip({ active, payload, label }: TooltipProps) {
   if (!active || !payload?.length) return null;
   return (
-    <div
-      className="glass-card px-3 py-2 text-sm"
-      role="tooltip"
-    >
-      <p style={{ color: 'var(--color-text-muted)' }} className="text-xs">{label}</p>
+    <div className="glass-card px-3 py-2 text-sm" role="tooltip">
+      <p style={{ color: 'var(--color-text-muted)' }} className="text-xs">
+        {label}
+      </p>
       <p className="font-bold" style={{ color: '#22c55e' }}>
         Score: {payload[0].value}
       </p>

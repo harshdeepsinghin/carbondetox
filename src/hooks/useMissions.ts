@@ -30,8 +30,7 @@ const DIFFICULTY_XP: Record<UserMission['difficulty'], number> = {
  * Handles Firestore updates and XP awarding.
  */
 export function useMissions(): UseMissionsReturn {
-  const { missions, setMissions, updateMission, userData, setUserData } =
-    useUserStore();
+  const { missions, setMissions, updateMission, userData, setUserData } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -53,7 +52,7 @@ export function useMissions(): UseMissionsReturn {
             body: JSON.stringify({ uid }),
           });
           if (res.ok) {
-            const data = await res.json() as { missions: UserMission[] };
+            const data = (await res.json()) as { missions: UserMission[] };
             setMissions(data.missions);
           } else {
             throw new Error('Failed to generate missions');

@@ -78,9 +78,7 @@ function OptionCard<T extends string>({
     >
       <div aria-hidden="true">{icon}</div>
       <span className="font-semibold text-sm">{label}</span>
-      {sublabel && (
-        <span className="text-xs opacity-70">{sublabel}</span>
-      )}
+      {sublabel && <span className="text-xs opacity-70">{sublabel}</span>}
     </button>
   );
 }
@@ -121,7 +119,10 @@ export function AssessmentStepper({
 
   function next() {
     const err = validate();
-    if (err) { setError(err); return; }
+    if (err) {
+      setError(err);
+      return;
+    }
     if (step < TOTAL_STEPS) setStep((s) => s + 1);
     else handleComplete();
   }
@@ -142,7 +143,10 @@ export function AssessmentStepper({
       {/* Progress bar */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium" style={{ color: 'var(--color-text-muted)' }}>
+          <span
+            className="text-sm font-medium"
+            style={{ color: 'var(--color-text-muted)' }}
+          >
             Step {step} of {TOTAL_STEPS}
           </span>
           <span className="text-sm font-semibold gradient-text">
@@ -162,7 +166,8 @@ export function AssessmentStepper({
             className="h-full rounded-full transition-all duration-500"
             style={{
               width: `${(step / TOTAL_STEPS) * 100}%`,
-              background: 'linear-gradient(90deg, var(--color-forest), var(--color-lime))',
+              background:
+                'linear-gradient(90deg, var(--color-forest), var(--color-lime))',
             }}
           />
         </div>
@@ -191,7 +196,6 @@ export function AssessmentStepper({
 
       {/* Step content */}
       <div className="glass-card p-8 mb-6 animate-in">
-
         {/* Step 1 — Transport */}
         {step === 1 && (
           <fieldset>
@@ -205,7 +209,8 @@ export function AssessmentStepper({
                 htmlFor="commute-distance"
                 className="block text-sm font-medium mb-2"
               >
-                Daily one-way commute distance: <strong>{profile.commuteDistance} km</strong>
+                Daily one-way commute distance:{' '}
+                <strong>{profile.commuteDistance} km</strong>
               </label>
               <input
                 id="commute-distance"
@@ -221,20 +226,51 @@ export function AssessmentStepper({
                 aria-valuenow={profile.commuteDistance}
                 aria-label={`Commute distance: ${profile.commuteDistance} kilometres`}
               />
-              <div className="flex justify-between text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>
-                <span>0 km</span><span>50 km</span>
+              <div
+                className="flex justify-between text-xs mt-1"
+                style={{ color: 'var(--color-text-muted)' }}
+              >
+                <span>0 km</span>
+                <span>50 km</span>
               </div>
             </div>
 
             <p className="text-sm font-medium mb-3">Primary transport mode</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {([
-                { v: 'walk', icon: <Footprints className={iconSize} />, label: 'Walk', sub: '0 emissions' },
-                { v: 'cycle', icon: <Wind className={iconSize} />, label: 'Cycle', sub: '0 emissions' },
-                { v: 'public', icon: <Bus className={iconSize} />, label: 'Public', sub: 'Metro/Bus/BRTS' },
-                { v: 'bike', icon: <Bike className={iconSize} />, label: 'Bike', sub: 'Two-wheeler' },
-                { v: 'car', icon: <Car className={iconSize} />, label: 'Car', sub: 'Private vehicle' },
-              ] as const).map(({ v, icon, label, sub }) => (
+              {(
+                [
+                  {
+                    v: 'walk',
+                    icon: <Footprints className={iconSize} />,
+                    label: 'Walk',
+                    sub: '0 emissions',
+                  },
+                  {
+                    v: 'cycle',
+                    icon: <Wind className={iconSize} />,
+                    label: 'Cycle',
+                    sub: '0 emissions',
+                  },
+                  {
+                    v: 'public',
+                    icon: <Bus className={iconSize} />,
+                    label: 'Public',
+                    sub: 'Metro/Bus/BRTS',
+                  },
+                  {
+                    v: 'bike',
+                    icon: <Bike className={iconSize} />,
+                    label: 'Bike',
+                    sub: 'Two-wheeler',
+                  },
+                  {
+                    v: 'car',
+                    icon: <Car className={iconSize} />,
+                    label: 'Car',
+                    sub: 'Private vehicle',
+                  },
+                ] as const
+              ).map(({ v, icon, label, sub }) => (
                 <OptionCard
                   key={v}
                   value={v}
@@ -257,12 +293,34 @@ export function AssessmentStepper({
               Food accounts for up to 25% of your carbon footprint
             </p>
             <div className="grid grid-cols-2 gap-3">
-              {([
-                { v: 'vegan', icon: <Leaf className={iconSize} />, label: 'Vegan', sub: 'Lowest impact' },
-                { v: 'vegetarian', icon: <Leaf className={iconSize} />, label: 'Vegetarian', sub: 'Low impact' },
-                { v: 'eggetarian', icon: <Leaf className={iconSize} />, label: 'Eggetarian', sub: 'Moderate' },
-                { v: 'nonveg', icon: <Leaf className={iconSize} />, label: 'Non-Veg', sub: 'Higher impact' },
-              ] as const).map(({ v, icon, label, sub }) => (
+              {(
+                [
+                  {
+                    v: 'vegan',
+                    icon: <Leaf className={iconSize} />,
+                    label: 'Vegan',
+                    sub: 'Lowest impact',
+                  },
+                  {
+                    v: 'vegetarian',
+                    icon: <Leaf className={iconSize} />,
+                    label: 'Vegetarian',
+                    sub: 'Low impact',
+                  },
+                  {
+                    v: 'eggetarian',
+                    icon: <Leaf className={iconSize} />,
+                    label: 'Eggetarian',
+                    sub: 'Moderate',
+                  },
+                  {
+                    v: 'nonveg',
+                    icon: <Leaf className={iconSize} />,
+                    label: 'Non-Veg',
+                    sub: 'Higher impact',
+                  },
+                ] as const
+              ).map(({ v, icon, label, sub }) => (
                 <OptionCard
                   key={v}
                   value={v}
@@ -287,12 +345,34 @@ export function AssessmentStepper({
 
             <p className="text-sm font-medium mb-3">Air conditioning usage</p>
             <div className="grid grid-cols-2 gap-3 mb-6">
-              {([
-                { v: 'none', icon: <Wind className={iconSize} />, label: 'No AC', sub: 'Fans only' },
-                { v: 'minimal', icon: <Zap className={iconSize} />, label: 'Minimal', sub: 'Weekends only' },
-                { v: 'moderate', icon: <Zap className={iconSize} />, label: 'Moderate', sub: 'Few hours/day' },
-                { v: 'heavy', icon: <Zap className={iconSize} />, label: 'Heavy', sub: 'All day' },
-              ] as const).map(({ v, icon, label, sub }) => (
+              {(
+                [
+                  {
+                    v: 'none',
+                    icon: <Wind className={iconSize} />,
+                    label: 'No AC',
+                    sub: 'Fans only',
+                  },
+                  {
+                    v: 'minimal',
+                    icon: <Zap className={iconSize} />,
+                    label: 'Minimal',
+                    sub: 'Weekends only',
+                  },
+                  {
+                    v: 'moderate',
+                    icon: <Zap className={iconSize} />,
+                    label: 'Moderate',
+                    sub: 'Few hours/day',
+                  },
+                  {
+                    v: 'heavy',
+                    icon: <Zap className={iconSize} />,
+                    label: 'Heavy',
+                    sub: 'All day',
+                  },
+                ] as const
+              ).map(({ v, icon, label, sub }) => (
                 <OptionCard
                   key={v}
                   value={v}
@@ -307,11 +387,13 @@ export function AssessmentStepper({
 
             <p className="text-sm font-medium mb-3">Monthly electricity bill</p>
             <div className="grid grid-cols-3 gap-3">
-              {([
-                { v: 'low', label: 'Low', sub: '< ₹500' },
-                { v: 'medium', label: 'Medium', sub: '₹500–₹2000' },
-                { v: 'high', label: 'High', sub: '> ₹2000' },
-              ] as const).map(({ v, label, sub }) => (
+              {(
+                [
+                  { v: 'low', label: 'Low', sub: '< ₹500' },
+                  { v: 'medium', label: 'Medium', sub: '₹500–₹2000' },
+                  { v: 'high', label: 'High', sub: '> ₹2000' },
+                ] as const
+              ).map(({ v, label, sub }) => (
                 <OptionCard
                   key={v}
                   value={v}
@@ -334,12 +416,34 @@ export function AssessmentStepper({
               How often do you buy new clothes, gadgets, or non-essentials?
             </p>
             <div className="grid grid-cols-2 gap-3">
-              {([
-                { v: 'rarely', icon: <ShoppingBag className={iconSize} />, label: 'Rarely', sub: 'A few times a year' },
-                { v: 'monthly', icon: <ShoppingBag className={iconSize} />, label: 'Monthly', sub: 'Once a month' },
-                { v: 'weekly', icon: <ShoppingBag className={iconSize} />, label: 'Weekly', sub: 'Every week' },
-                { v: 'daily', icon: <ShoppingBag className={iconSize} />, label: 'Daily', sub: 'Online every day' },
-              ] as const).map(({ v, icon, label, sub }) => (
+              {(
+                [
+                  {
+                    v: 'rarely',
+                    icon: <ShoppingBag className={iconSize} />,
+                    label: 'Rarely',
+                    sub: 'A few times a year',
+                  },
+                  {
+                    v: 'monthly',
+                    icon: <ShoppingBag className={iconSize} />,
+                    label: 'Monthly',
+                    sub: 'Once a month',
+                  },
+                  {
+                    v: 'weekly',
+                    icon: <ShoppingBag className={iconSize} />,
+                    label: 'Weekly',
+                    sub: 'Every week',
+                  },
+                  {
+                    v: 'daily',
+                    icon: <ShoppingBag className={iconSize} />,
+                    label: 'Daily',
+                    sub: 'Online every day',
+                  },
+                ] as const
+              ).map(({ v, icon, label, sub }) => (
                 <OptionCard
                   key={v}
                   value={v}
@@ -409,11 +513,28 @@ export function AssessmentStepper({
               How consistently do you segregate and recycle waste?
             </p>
             <div className="grid grid-cols-3 gap-3">
-              {([
-                { v: 'always', icon: <Trash2 className={iconSize} />, label: 'Always', sub: 'Diligent recycler' },
-                { v: 'sometimes', icon: <Trash2 className={iconSize} />, label: 'Sometimes', sub: 'When convenient' },
-                { v: 'never', icon: <Trash2 className={iconSize} />, label: 'Rarely', sub: 'Mixed waste' },
-              ] as const).map(({ v, icon, label, sub }) => (
+              {(
+                [
+                  {
+                    v: 'always',
+                    icon: <Trash2 className={iconSize} />,
+                    label: 'Always',
+                    sub: 'Diligent recycler',
+                  },
+                  {
+                    v: 'sometimes',
+                    icon: <Trash2 className={iconSize} />,
+                    label: 'Sometimes',
+                    sub: 'When convenient',
+                  },
+                  {
+                    v: 'never',
+                    icon: <Trash2 className={iconSize} />,
+                    label: 'Rarely',
+                    sub: 'Mixed waste',
+                  },
+                ] as const
+              ).map(({ v, icon, label, sub }) => (
                 <OptionCard
                   key={v}
                   value={v}
@@ -462,11 +583,14 @@ export function AssessmentStepper({
           disabled={saving}
           className="flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all"
           style={{
-            background: 'linear-gradient(135deg, var(--color-forest), var(--color-forest-dark))',
+            background:
+              'linear-gradient(135deg, var(--color-forest), var(--color-forest-dark))',
             color: 'white',
             opacity: saving ? 0.7 : 1,
           }}
-          aria-label={step === TOTAL_STEPS ? 'Calculate My Score' : 'Continue to next step'}
+          aria-label={
+            step === TOTAL_STEPS ? 'Calculate My Score' : 'Continue to next step'
+          }
         >
           {saving
             ? 'Calculating...'

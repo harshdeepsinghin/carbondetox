@@ -1,5 +1,11 @@
 import { adminDb } from './admin';
-import type { UserProfile, CarbonScore, UserMission, UserData, ReceiptRecord } from '@/types';
+import type {
+  UserProfile,
+  CarbonScore,
+  UserMission,
+  UserData,
+  ReceiptRecord,
+} from '@/types';
 import { FieldValue } from 'firebase-admin/firestore';
 
 const COLLECTIONS = {
@@ -17,7 +23,9 @@ export async function getAdminProfile(uid: string): Promise<UserProfile | null> 
   return snap.exists ? (snap.data() as UserProfile) : null;
 }
 
-export async function getAdminLatestCarbonScore(uid: string): Promise<CarbonScore | null> {
+export async function getAdminLatestCarbonScore(
+  uid: string,
+): Promise<CarbonScore | null> {
   const snap = await adminDb
     .collection(COLLECTIONS.CARBON_SCORES)
     .where('uid', '==', uid)
@@ -28,7 +36,10 @@ export async function getAdminLatestCarbonScore(uid: string): Promise<CarbonScor
   return snap.docs[0].data() as CarbonScore;
 }
 
-export async function getAdminMissions(uid: string, date: string): Promise<UserMission[]> {
+export async function getAdminMissions(
+  uid: string,
+  date: string,
+): Promise<UserMission[]> {
   const snap = await adminDb
     .collection(COLLECTIONS.USER_MISSIONS)
     .where('uid', '==', uid)

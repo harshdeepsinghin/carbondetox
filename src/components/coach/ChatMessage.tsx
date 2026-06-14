@@ -36,25 +36,17 @@ export function ChatMessage({ message, userInitial = 'U' }: ChatMessageProps) {
   });
 
   return (
-    <div
-      className={`flex gap-2.5 ${isAssistant ? '' : 'flex-row-reverse'} items-end`}
-    >
+    <div className={`flex gap-2.5 ${isAssistant ? '' : 'flex-row-reverse'} items-end`}>
       {/* Avatar */}
       <div
         className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
         style={{
-          background: isAssistant
-            ? 'var(--color-forest)'
-            : 'rgba(59,130,246,0.8)',
+          background: isAssistant ? 'var(--color-forest)' : 'rgba(59,130,246,0.8)',
           color: 'white',
         }}
         aria-hidden="true"
       >
-        {isAssistant ? (
-          <Leaf className="w-4 h-4" />
-        ) : (
-          userInitial.toUpperCase()
-        )}
+        {isAssistant ? <Leaf className="w-4 h-4" /> : userInitial.toUpperCase()}
       </div>
 
       {/* Bubble */}
@@ -62,9 +54,7 @@ export function ChatMessage({ message, userInitial = 'U' }: ChatMessageProps) {
         <div
           className="px-4 py-3 rounded-2xl text-sm leading-relaxed"
           style={{
-            background: isAssistant
-              ? 'rgba(22,163,74,0.12)'
-              : 'rgba(59,130,246,0.12)',
+            background: isAssistant ? 'rgba(22,163,74,0.12)' : 'rgba(59,130,246,0.12)',
             border: `1px solid ${isAssistant ? 'rgba(22,163,74,0.2)' : 'rgba(59,130,246,0.2)'}`,
             borderBottomLeftRadius: isAssistant ? 4 : undefined,
             borderBottomRightRadius: isAssistant ? undefined : 4,

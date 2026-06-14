@@ -19,14 +19,13 @@ interface ChatHistoryItem {
 }
 
 function buildSystemPrompt(ctx: CoachContext): string {
-  const weakCategories = getWeakestCategories(ctx.score)
-    .slice(0, 3)
-    .join(', ');
-  const recentMissionTitles = ctx.recentMissions
-    .filter((m) => m.completed)
-    .map((m) => m.title)
-    .slice(0, 5)
-    .join(', ') || 'none yet';
+  const weakCategories = getWeakestCategories(ctx.score).slice(0, 3).join(', ');
+  const recentMissionTitles =
+    ctx.recentMissions
+      .filter((m) => m.completed)
+      .map((m) => m.title)
+      .slice(0, 5)
+      .join(', ') || 'none yet';
 
   return `You are CarbonDetox Coach, a warm and practical sustainability mentor focused on the Indian context.
 

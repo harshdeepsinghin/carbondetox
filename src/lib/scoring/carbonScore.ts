@@ -196,9 +196,7 @@ export function getWeakestCategories(score: CarbonScore): MissionCategory[] {
     'waste',
   ];
 
-  return [...categories].sort(
-    (a, b) => score[a] - score[b],
-  );
+  return [...categories].sort((a, b) => score[a] - score[b]);
 }
 
 /**

@@ -55,7 +55,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             style={{ background: 'rgba(22,163,74,0.15)' }}
             aria-hidden="true"
           >
-            <Leaf className="w-6 h-6 animate-pulse" style={{ color: 'var(--color-forest-light)' }} />
+            <Leaf
+              className="w-6 h-6 animate-pulse"
+              style={{ color: 'var(--color-forest-light)' }}
+            />
           </div>
           <p style={{ color: 'var(--color-text-muted)' }}>Loading your dashboard...</p>
         </div>
@@ -75,13 +78,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <Navbar />
 
         {/* Main content area */}
-        <main
-          className="flex-1 lg:ml-64 pt-16 lg:pt-0 min-h-screen"
-          id="main-content"
-        >
-          <div className="max-w-5xl mx-auto p-6">
-            {children}
-          </div>
+        <main className="flex-1 lg:ml-64 pt-16 lg:pt-0 min-h-screen" id="main-content">
+          <div className="max-w-5xl mx-auto p-6">{children}</div>
         </main>
       </div>
     </ErrorBoundary>

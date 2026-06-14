@@ -128,16 +128,10 @@ export function CarbonScoreRing({
 
       {/* Label below ring */}
       <div className="flex flex-col items-center gap-1">
-        <span
-          className="text-sm font-semibold"
-          style={{ color }}
-        >
+        <span className="text-sm font-semibold" style={{ color }}>
           {scoreLabel(score)}
         </span>
-        <span
-          className="text-xs"
-          style={{ color: 'var(--color-text-muted)' }}
-        >
+        <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
           Carbon Health Score
         </span>
       </div>

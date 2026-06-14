@@ -15,9 +15,7 @@ export default function CoachPage() {
         </p>
       </header>
 
-      <div
-        className="glass-card flex-1 flex flex-col overflow-hidden"
-      >
+      <div className="glass-card flex-1 flex flex-col overflow-hidden">
         <ChatInterface scoreContext={carbonScore?.overall} />
       </div>
     </div>

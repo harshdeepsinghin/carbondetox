@@ -49,7 +49,9 @@ export function ChatInterface({ scoreContext }: ChatInterfaceProps) {
 
   const userInitial = userData?.name?.charAt(0) ?? 'U';
   const isAnonymous = userData?.isAnonymous ?? false;
-  const guestMessageCount = isAnonymous ? chatHistory.filter(m => m.role === 'user').length : 0;
+  const guestMessageCount = isAnonymous
+    ? chatHistory.filter((m) => m.role === 'user').length
+    : 0;
   const guestLimitReached = isAnonymous && guestMessageCount >= 5;
 
   return (
@@ -64,7 +66,11 @@ export function ChatInterface({ scoreContext }: ChatInterfaceProps) {
             color: 'var(--color-text-muted)',
           }}
         >
-          <Leaf className="w-3.5 h-3.5 shrink-0" style={{ color: 'var(--color-forest-light)' }} aria-hidden="true" />
+          <Leaf
+            className="w-3.5 h-3.5 shrink-0"
+            style={{ color: 'var(--color-forest-light)' }}
+            aria-hidden="true"
+          />
           Coaching based on your Carbon Score:{' '}
           <span className="font-bold" style={{ color: 'var(--color-forest-light)' }}>
             {scoreContext}/100
@@ -97,9 +103,7 @@ export function ChatInterface({ scoreContext }: ChatInterfaceProps) {
         aria-busy={sending}
       >
         {chatHistory.length === 0 && !sending && (
-          <div
-            className="flex flex-col items-center justify-center h-full text-center gap-3 py-16"
-          >
+          <div className="flex flex-col items-center justify-center h-full text-center gap-3 py-16">
             <div
               className="w-16 h-16 rounded-2xl flex items-center justify-center"
               style={{ background: 'rgba(22,163,74,0.12)' }}
@@ -109,7 +113,8 @@ export function ChatInterface({ scoreContext }: ChatInterfaceProps) {
             </div>
             <h3 className="font-semibold text-lg">Your AI Sustainability Coach</h3>
             <p className="text-sm max-w-xs" style={{ color: 'var(--color-text-muted)' }}>
-              Ask me anything about reducing your carbon footprint, sustainable swaps, or your daily habits.
+              Ask me anything about reducing your carbon footprint, sustainable swaps, or
+              your daily habits.
             </p>
             <div className="flex flex-wrap gap-2 justify-center mt-2">
               {[
@@ -134,11 +139,7 @@ export function ChatInterface({ scoreContext }: ChatInterfaceProps) {
         )}
 
         {chatHistory.map((msg) => (
-          <ChatMessage
-            key={msg.id}
-            message={msg}
-            userInitial={userInitial}
-          />
+          <ChatMessage key={msg.id} message={msg} userInitial={userInitial} />
         ))}
 
         {sending && <TypingIndicator />}
@@ -146,10 +147,7 @@ export function ChatInterface({ scoreContext }: ChatInterfaceProps) {
       </div>
 
       {/* Input area */}
-      <div
-        className="p-4 border-t"
-        style={{ borderColor: 'var(--color-border)' }}
-      >
+      <div className="p-4 border-t" style={{ borderColor: 'var(--color-border)' }}>
         <div
           className="flex gap-2 items-end rounded-xl border p-2 transition-all"
           style={{
@@ -201,7 +199,10 @@ export function ChatInterface({ scoreContext }: ChatInterfaceProps) {
             <Send className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
-        <p className="text-xs mt-1.5 text-right" style={{ color: 'var(--color-text-muted)' }}>
+        <p
+          className="text-xs mt-1.5 text-right"
+          style={{ color: 'var(--color-text-muted)' }}
+        >
           {input.length}/500
         </p>
       </div>

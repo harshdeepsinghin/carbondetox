@@ -7,10 +7,7 @@ import { CarbonScoreRing } from '@/components/dashboard/CarbonScoreRing';
 import { CategoryCard } from '@/components/dashboard/CategoryCard';
 import { TrendChart } from '@/components/dashboard/TrendChart';
 import { StreakBadge } from '@/components/dashboard/StreakBadge';
-import {
-  SkeletonScoreRing,
-  SkeletonCard,
-} from '@/components/shared/LoadingSkeleton';
+import { SkeletonScoreRing, SkeletonCard } from '@/components/shared/LoadingSkeleton';
 import { useUserStore } from '@/stores/userStore';
 import { useCarbonScore } from '@/hooks/useCarbonScore';
 import { useMissions } from '@/hooks/useMissions';
@@ -34,7 +31,7 @@ export default function DashboardClient() {
       refresh();
       loadMissions(userData.uid);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?.uid]);
 
   const score = carbonScore ?? storeScore;
@@ -45,9 +42,7 @@ export default function DashboardClient() {
       {/* Page header */}
       <header className="flex items-start justify-between">
         <div>
-          <h1 className="mb-1">
-            Hey, {userData?.name?.split(' ')[0] ?? 'there'} 👋
-          </h1>
+          <h1 className="mb-1">Hey, {userData?.name?.split(' ')[0] ?? 'there'} 👋</h1>
           <p style={{ color: 'var(--color-text-muted)' }}>
             Here&apos;s your sustainability snapshot
           </p>
@@ -64,7 +59,9 @@ export default function DashboardClient() {
 
       {/* Score + Streak row */}
       <section aria-labelledby="score-section-heading">
-        <h2 id="score-section-heading" className="sr-only">Carbon Health Score</h2>
+        <h2 id="score-section-heading" className="sr-only">
+          Carbon Health Score
+        </h2>
         <div className="glass-card p-8 flex flex-col sm:flex-row items-center gap-8">
           {scoreLoading || !score ? (
             <SkeletonScoreRing />
@@ -95,7 +92,7 @@ export default function DashboardClient() {
                   className="w-full rounded-full overflow-hidden"
                   style={{ height: 6, background: 'rgba(255,255,255,0.08)' }}
                   role="progressbar"
-                  aria-valuenow={(userData.xp % 100)}
+                  aria-valuenow={userData.xp % 100}
                   aria-valuemin={0}
                   aria-valuemax={100}
                   aria-label={`XP progress: ${userData.xp % 100} of 100 to next level`}
@@ -116,10 +113,17 @@ export default function DashboardClient() {
               className="flex items-center gap-2 text-sm px-3 py-2 rounded-xl"
               style={{ background: 'rgba(255,255,255,0.04)' }}
             >
-              <Target className="w-4 h-4 shrink-0" style={{ color: 'var(--color-forest-light)' }} aria-hidden="true" />
+              <Target
+                className="w-4 h-4 shrink-0"
+                style={{ color: 'var(--color-forest-light)' }}
+                aria-hidden="true"
+              />
               <span style={{ color: 'var(--color-text-secondary)' }}>
                 Today&apos;s missions:{' '}
-                <span className="font-bold" style={{ color: 'var(--color-forest-light)' }}>
+                <span
+                  className="font-bold"
+                  style={{ color: 'var(--color-forest-light)' }}
+                >
                   {completedMissions} of {missions.length} completed
                 </span>
               </span>
@@ -158,16 +162,14 @@ export default function DashboardClient() {
         </h2>
         {!score ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {CATEGORIES.map((c) => <SkeletonCard key={c} />)}
+            {CATEGORIES.map((c) => (
+              <SkeletonCard key={c} />
+            ))}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {CATEGORIES.map((cat) => (
-              <CategoryCard
-                key={cat}
-                category={cat}
-                score={score[cat]}
-              />
+              <CategoryCard key={cat} category={cat} score={score[cat]} />
             ))}
           </div>
         )}
@@ -176,7 +178,9 @@ export default function DashboardClient() {
       {/* Trend Chart */}
       <section aria-labelledby="trend-heading">
         <div className="glass-card p-6">
-          <h2 id="trend-heading" className="font-bold mb-4">Score Trend (Last 7 Days)</h2>
+          <h2 id="trend-heading" className="font-bold mb-4">
+            Score Trend (Last 7 Days)
+          </h2>
           <TrendChart scores={scoreHistory} days={7} />
         </div>
       </section>

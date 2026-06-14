@@ -1,14 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { adminBucket } from '@/lib/firebase/admin';
-import {
-  checkAdminRateLimit,
-  saveAdminReceipt,
-} from '@/lib/firebase/firestoreAdmin';
+import { checkAdminRateLimit, saveAdminReceipt } from '@/lib/firebase/firestoreAdmin';
 import { analyzeReceipt } from '@/lib/gemini/scanner';
-import {
-  ALLOWED_IMAGE_TYPES,
-  MAX_FILE_SIZE_BYTES,
-} from '@/lib/utils/validation';
+import { ALLOWED_IMAGE_TYPES, MAX_FILE_SIZE_BYTES } from '@/lib/utils/validation';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -29,7 +23,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    if (!ALLOWED_IMAGE_TYPES.includes(file.type as (typeof ALLOWED_IMAGE_TYPES)[number])) {
+    if (
+      !ALLOWED_IMAGE_TYPES.includes(file.type as (typeof ALLOWED_IMAGE_TYPES)[number])
+    ) {
       return NextResponse.json(
         { error: 'Invalid file type. Use JPEG, PNG, or WebP.' },
         { status: 400 },
@@ -76,7 +72,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     if (!analysis) {
       return NextResponse.json(
-        { error: "That doesn't look like a receipt. Please upload a shopping bill or grocery receipt." },
+        {
+          error:
+            "That doesn't look like a receipt. Please upload a shopping bill or grocery receipt.",
+        },
         { status: 422 },
       );
     }

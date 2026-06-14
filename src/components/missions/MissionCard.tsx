@@ -39,9 +39,7 @@ export function MissionCard({ mission, onComplete, blurred = false }: MissionCar
         filter: blurred ? 'blur(4px)' : undefined,
         pointerEvents: blurred ? 'none' : undefined,
         opacity: mission.completed ? 0.75 : 1,
-        borderColor: mission.completed
-          ? 'rgba(22,163,74,0.3)'
-          : 'rgba(255,255,255,0.06)',
+        borderColor: mission.completed ? 'rgba(22,163,74,0.3)' : 'rgba(255,255,255,0.06)',
       }}
       aria-label={`Mission: ${mission.title}${mission.completed ? ', completed' : ''}`}
     >
@@ -65,7 +63,10 @@ export function MissionCard({ mission, onComplete, blurred = false }: MissionCar
         <h3 className="font-bold text-base leading-snug">{mission.title}</h3>
 
         {/* Description */}
-        <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
+        <p
+          className="text-sm leading-relaxed"
+          style={{ color: 'var(--color-text-secondary)' }}
+        >
           {mission.description}
         </p>
 
@@ -135,12 +136,8 @@ export function MissionCard({ mission, onComplete, blurred = false }: MissionCar
           }
           className="w-full py-3 rounded-xl font-semibold text-sm transition-all"
           style={{
-            background: mission.completed
-              ? 'rgba(22,163,74,0.1)'
-              : 'var(--color-forest)',
-            color: mission.completed
-              ? 'var(--color-forest-light)'
-              : 'white',
+            background: mission.completed ? 'rgba(22,163,74,0.1)' : 'var(--color-forest)',
+            color: mission.completed ? 'var(--color-forest-light)' : 'white',
             cursor: mission.completed ? 'default' : 'pointer',
           }}
         >

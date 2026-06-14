@@ -26,11 +26,16 @@ export function MissionList({
   if (loading) {
     return (
       <section aria-label="Loading missions" aria-busy="true">
-        <p className="text-sm mb-4 animate-pulse" style={{ color: 'var(--color-text-muted)' }}>
+        <p
+          className="text-sm mb-4 animate-pulse"
+          style={{ color: 'var(--color-text-muted)' }}
+        >
           Generating your missions with AI...
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map((i) => <SkeletonMissionCard key={i} />)}
+          {[1, 2, 3].map((i) => (
+            <SkeletonMissionCard key={i} />
+          ))}
         </div>
       </section>
     );
@@ -44,7 +49,9 @@ export function MissionList({
         style={{ borderColor: 'rgba(239,68,68,0.3)' }}
       >
         <p className="font-semibold mb-1">Could not load missions</p>
-        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{error}</p>
+        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          {error}
+        </p>
       </div>
     );
   }

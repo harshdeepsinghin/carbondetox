@@ -9,21 +9,22 @@
 
 Before any code: understand what the judges are actually scoring.
 
-| Evaluation Axis | What Average Teams Do | What YOU Should Do |
-|---|---|---|
-| Code Quality | One big messy file | Feature-sliced folder structure, typed everything |
-| Security | No auth checks | Firestore rules, input sanitization, rate limiting middleware |
-| Efficiency | Fetch everything always | SWR/React Query caching, Firestore composite indexes |
-| Testing | None | At least unit tests for scoring logic + E2E for critical paths |
-| Accessibility | Ignored | ARIA, keyboard nav, screen reader tested, color contrast ≥ 4.5:1 |
+| Evaluation Axis | What Average Teams Do   | What YOU Should Do                                               |
+| --------------- | ----------------------- | ---------------------------------------------------------------- |
+| Code Quality    | One big messy file      | Feature-sliced folder structure, typed everything                |
+| Security        | No auth checks          | Firestore rules, input sanitization, rate limiting middleware    |
+| Efficiency      | Fetch everything always | SWR/React Query caching, Firestore composite indexes             |
+| Testing         | None                    | At least unit tests for scoring logic + E2E for critical paths   |
+| Accessibility   | Ignored                 | ARIA, keyboard nav, screen reader tested, color contrast ≥ 4.5:1 |
 
-The GPT plan was a solid *feature* plan. This document is a **winning** plan — structured around what gets you points, not just what sounds cool.
+The GPT plan was a solid _feature_ plan. This document is a **winning** plan — structured around what gets you points, not just what sounds cool.
 
 ---
 
 ## 1. Refined Project Vision
 
 ### What the GPT Plan Got Right ✅
+
 - Tech stack is excellent (Next.js 15 + Firebase + Gemini)
 - Module list covers all key areas
 - Development phases are logical
@@ -87,6 +88,7 @@ Lint/Format:    ESLint + Prettier (judges check code quality — this signals pr
 ```
 
 ### Why Vercel over Cloud Run?
+
 - Zero-config deployment from GitHub
 - Saves 2-4 hours of Docker/Artifact Registry setup
 - Automatically handles HTTPS, edge caching
@@ -177,7 +179,7 @@ The original used a vague "weighted model." Here's the actual formula — make i
 
 interface UserProfile {
   diet: 'vegan' | 'vegetarian' | 'eggetarian' | 'nonveg';
-  commuteDistance: number;        // km/day
+  commuteDistance: number; // km/day
   transportMode: 'walk' | 'cycle' | 'public' | 'car' | 'bike';
   acUsage: 'none' | 'minimal' | 'moderate' | 'heavy';
   electricityRange: 'low' | 'medium' | 'high'; // <100, 100-300, >300 units
@@ -196,13 +198,14 @@ const FLIGHT_EMISSION_PER = 255; // kg CO2 per round-trip domestic flight averag
 const RECYCLING_FACTOR = { always: 0.8, sometimes: 0.9, never: 1.0 }; // waste multiplier
 
 // Category weights
-const WEIGHTS = { transport: 0.30, food: 0.25, energy: 0.20, shopping: 0.15, waste: 0.10 };
+const WEIGHTS = { transport: 0.3, food: 0.25, energy: 0.2, shopping: 0.15, waste: 0.1 };
 
 // Category max emissions (for normalization)
 const MAX = { transport: 7665, food: 2500, energy: 2600, shopping: 1500, waste: 500 };
 ```
 
 This matters because:
+
 - It's **testable** (pure function with no side effects)
 - It's **documented** (judges can verify the logic)
 - It uses **real IPCC-adjacent values** (adds credibility)
@@ -418,7 +421,11 @@ The Gemini API calls are the most expensive. Add a simple rate limiter.
 // lib/utils/rateLimiter.ts
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-export async function checkRateLimit(uid: string, action: 'chat' | 'scan', limit: number) {
+export async function checkRateLimit(
+  uid: string,
+  action: 'chat' | 'scan',
+  limit: number,
+) {
   const key = `rate_limits/${uid}_${action}_${new Date().toISOString().slice(0, 10)}`;
   const ref = doc(db, key);
   const snap = await getDoc(ref);
@@ -441,16 +448,21 @@ export async function checkRateLimit(uid: string, action: 'chat' | 'scan', limit
 ```
 
 Also add to all API routes:
+
 ```typescript
 // Input validation
 import { z } from 'zod';
 
 const ChatSchema = z.object({
   message: z.string().min(1).max(500),
-  history: z.array(z.object({
-    role: z.enum(['user', 'assistant']),
-    content: z.string().max(1000)
-  })).max(20)
+  history: z
+    .array(
+      z.object({
+        role: z.enum(['user', 'assistant']),
+        content: z.string().max(1000),
+      }),
+    )
+    .max(20),
 });
 ```
 
@@ -518,9 +530,12 @@ test('chat with AI coach returns response', async ({ page }) => { ... });
 ```
 
 Add this to your global CSS:
+
 ```css
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
@@ -571,42 +586,55 @@ The README is evaluated. Here's the exact structure:
 ---
 
 ## The Problem
+
 [2-3 sentences on the problem, grounded in real data]
 
 ## The Solution
+
 [What CarbonDetox does, in 3 bullet points]
 
 ## Features
+
 [Feature list with ✅ for implemented, 🔜 for planned]
 
 ## Architecture
+
 [Simple ASCII or diagram showing the flow]
 
 ## Tech Stack
+
 [Table: Layer | Technology | Why]
 
 ## AI Logic
+
 [Explain how Gemini is used — context injection, prompting strategy]
 
 ## Carbon Scoring Formula
+
 [Show the formula and source of emissions data]
 
 ## Database Design
+
 [Schema tables — NOT code blocks, use markdown tables]
 
 ## Security
+
 [List security measures implemented]
 
 ## Accessibility
+
 [WCAG compliance measures taken]
 
 ## Setup & Running Locally
+
 [Step-by-step, actually tested]
 
 ## Assumptions
+
 [Be honest — judges respect this]
 
 ## Future Scope
+
 [2-3 realistic items]
 ```
 
@@ -617,6 +645,7 @@ The README is evaluated. Here's the exact structure:
 The original 10-phase plan was good but too granular. Here's a time-boxed hackathon version.
 
 ### Phase 1 — Foundation (2–3 hours)
+
 - [ ] Next.js 15 project init with TypeScript strict mode
 - [ ] ESLint + Prettier configured
 - [ ] Tailwind + shadcn/ui setup
@@ -626,6 +655,7 @@ The original 10-phase plan was good but too granular. Here's a time-boxed hackat
 - [ ] GitHub repo created, initial commit
 
 ### Phase 2 — Auth + Onboarding (2–3 hours)
+
 - [ ] Firebase Auth (Google + Anonymous)
 - [ ] `useAuth` hook
 - [ ] Landing page (not just lorem ipsum — real copy)
@@ -633,18 +663,21 @@ The original 10-phase plan was good but too granular. Here's a time-boxed hackat
 - [ ] Profile saved to Firestore
 
 ### Phase 3 — Carbon Score Engine (1–2 hours)
+
 - [ ] Pure scoring function written
 - [ ] Unit tests written for scoring (do this NOW, not later)
 - [ ] Score saved to Firestore on onboarding complete
 - [ ] Firestore index created for score trend queries
 
 ### Phase 4 — Dashboard (2 hours)
+
 - [ ] Score ring component
 - [ ] Category breakdown cards
 - [ ] Streak display
 - [ ] Basic trend chart (Recharts or shadcn Charts)
 
 ### Phase 5 — AI Coach (2–3 hours)
+
 - [ ] `/api/coach` route handler with Gemini
 - [ ] Context injection (profile + score + missions)
 - [ ] Rate limiting (20 messages/day)
@@ -652,24 +685,28 @@ The original 10-phase plan was good but too granular. Here's a time-boxed hackat
 - [ ] Input validation with Zod
 
 ### Phase 6 — Daily Missions (2 hours)
+
 - [ ] `/api/missions` route — Gemini generates 3 missions/day
 - [ ] Mission cards with XP display
 - [ ] Mark complete → XP awarded → streak updated
 - [ ] Yesterday's missions excluded from generation prompt
 
 ### Phase 7 — Receipt Scanner (1–2 hours)
+
 - [ ] Image upload to Firebase Storage
 - [ ] `/api/scanner` route with Gemini Vision
 - [ ] Analysis display (items + swap suggestions)
 - [ ] Rate limiting (5 scans/day)
 
 ### Phase 8 — Progress + Gamification (1–2 hours)
+
 - [ ] Progress page with score trend chart
 - [ ] Mission completion history
 - [ ] Level + badge display
 - [ ] Streak tracking
 
 ### Phase 9 — Polish + PWA (1 hour)
+
 - [ ] PWA manifest + service worker (next-pwa)
 - [ ] Accessibility audit (run axe DevTools)
 - [ ] Mobile responsiveness check
@@ -677,6 +714,7 @@ The original 10-phase plan was good but too granular. Here's a time-boxed hackat
 - [ ] Error boundaries
 
 ### Phase 10 — Tests + Deploy (1–2 hours)
+
 - [ ] E2E tests for onboarding + chat flow
 - [ ] Deploy to Vercel (or Cloud Run if required)
 - [ ] README finalized
@@ -691,7 +729,9 @@ The original 10-phase plan was good but too granular. Here's a time-boxed hackat
 These are the "judge opens your project and goes wow" moments:
 
 ### 1. India-First Context 🇮🇳
+
 Most carbon tools are built for Western lifestyles. CarbonDetox should:
+
 - Reference Indian transport (auto, metro, BRTS, e-rickshaw)
 - Indian diet context (dal-rice vs burger)
 - Indian electricity tariffs (units, not kWh jargon)
@@ -700,7 +740,9 @@ Most carbon tools are built for Western lifestyles. CarbonDetox should:
 This shows real-world usability — a judge criterion.
 
 ### 2. CO₂ in Relatable Units
+
 Instead of "120 kg CO₂e" say:
+
 - "Equivalent to driving Mumbai to Pune 4 times"
 - "Like charging your phone 14,000 times"
 - "Equal to 50 plastic bags of emissions"
@@ -708,7 +750,9 @@ Instead of "120 kg CO₂e" say:
 Build a `formatCO2(kg: number): string` utility that does this automatically.
 
 ### 3. The Guest Mode That Actually Works
+
 Most apps gate everything behind auth. CarbonDetox should let guest users:
+
 - Complete onboarding
 - See their score
 - Chat with the coach (5 messages limit)
@@ -717,12 +761,15 @@ Most apps gate everything behind auth. CarbonDetox should let guest users:
 This makes the demo dramatically more impressive — judges can try it without logging in.
 
 ### 4. AI Missions Rooted in Real Life
+
 Generic missions fail. Good missions sound like:
+
 > "Take a tiffin box for today's lunch instead of ordering delivery. Saves ~0.8 kg CO₂ and ₹80."
 
 The rupee savings angle (sustainability = saves money) is underused and powerful for the student persona.
 
 ### 5. One Shareable Moment
+
 Generate a "My Carbon Score" card (like Spotify Wrapped) that users can screenshot. This shows product thinking beyond just functionality.
 
 ---
@@ -802,4 +849,4 @@ The word "Indians" (or "people in India") is a strategic inclusion — it signal
 
 ---
 
-*Built with precision. Submitted early. Wins.* 🌿
+_Built with precision. Submitted early. Wins._ 🌿

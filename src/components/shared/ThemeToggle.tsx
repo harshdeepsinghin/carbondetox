@@ -30,12 +30,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
 
   // Render a placeholder during SSR to avoid layout shift
   if (!mounted) {
-    return (
-      <div
-        className={`w-9 h-9 rounded-xl ${className}`}
-        aria-hidden="true"
-      />
-    );
+    return <div className={`w-9 h-9 rounded-xl ${className}`} aria-hidden="true" />;
   }
 
   return (
@@ -50,10 +45,11 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
         border: '1px solid var(--color-border)',
       }}
     >
-      {isDark
-        ? <Sun className="w-4 h-4" aria-hidden="true" />
-        : <Moon className="w-4 h-4" aria-hidden="true" />
-      }
+      {isDark ? (
+        <Sun className="w-4 h-4" aria-hidden="true" />
+      ) : (
+        <Moon className="w-4 h-4" aria-hidden="true" />
+      )}
     </button>
   );
 }

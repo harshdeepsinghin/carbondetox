@@ -14,11 +14,7 @@ interface StreakBadgeProps {
  */
 export function StreakBadge({ currentStreak, longestStreak }: StreakBadgeProps) {
   const isHot = currentStreak >= 7;
-  const flameColor = isHot
-    ? '#ef4444'
-    : currentStreak >= 3
-      ? '#f97316'
-      : '#f59e0b';
+  const flameColor = isHot ? '#ef4444' : currentStreak >= 3 ? '#f97316' : '#f59e0b';
 
   return (
     <div

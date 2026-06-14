@@ -19,8 +19,7 @@ const PERSIST_DEBOUNCE_MS = 1500;
  * Sends messages to the /api/coach route and persists to Firestore (debounced).
  */
 export function useChat(): UseChatReturn {
-  const { chatHistory, addChatMessage, clearChatHistory, userData } =
-    useUserStore();
+  const { chatHistory, addChatMessage, clearChatHistory, userData } = useUserStore();
   const persistTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /** Debounced Firestore persist — only writes after user stops chatting briefly */
@@ -67,13 +66,13 @@ export function useChat(): UseChatReturn {
         });
 
         if (res.status === 429) {
-          return "Daily limit reached. Come back tomorrow! 🌿";
+          return 'Daily limit reached. Come back tomorrow! 🌿';
         }
 
         if (!res.ok) {
           let errMsg = `HTTP ${res.status}`;
           try {
-            const errData = await res.json() as { error?: string };
+            const errData = (await res.json()) as { error?: string };
             if (errData?.error) {
               errMsg = errData.error;
             }
@@ -81,7 +80,7 @@ export function useChat(): UseChatReturn {
           throw new Error(errMsg);
         }
 
-        const data = await res.json() as { reply: string };
+        const data = (await res.json()) as { reply: string };
         const assistantMessage: ChatMessage = {
           id: `msg-${Date.now()}-assistant`,
           role: 'assistant',
@@ -94,7 +93,10 @@ export function useChat(): UseChatReturn {
 
         return data.reply;
       } catch (error: unknown) {
-        const errorText = error instanceof Error ? error.message : "I'm having trouble connecting right now. Please try again in a moment. 🌿";
+        const errorText =
+          error instanceof Error
+            ? error.message
+            : "I'm having trouble connecting right now. Please try again in a moment. 🌿";
         const errorMessage: ChatMessage = {
           id: `msg-${Date.now()}-error`,
           role: 'assistant',

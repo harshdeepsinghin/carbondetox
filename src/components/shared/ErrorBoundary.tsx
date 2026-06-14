@@ -49,12 +49,11 @@ export class ErrorBoundary extends React.Component<
               className="glass-card p-8 max-w-md w-full text-center"
               style={{ border: '1px solid rgba(239,68,68,0.3)' }}
             >
-              <div className="text-4xl mb-4" aria-hidden="true">🌿</div>
+              <div className="text-4xl mb-4" aria-hidden="true">
+                🌿
+              </div>
               <h2 className="text-xl font-bold mb-2">Something went wrong</h2>
-              <p
-                className="text-sm mb-6"
-                style={{ color: 'var(--color-text-muted)' }}
-              >
+              <p className="text-sm mb-6" style={{ color: 'var(--color-text-muted)' }}>
                 Don&apos;t worry — your data is safe. Please refresh the page.
               </p>
               <button

@@ -13,10 +13,7 @@ function buildMissionsPrompt(
 ): string {
   const weakestCategory = getWeakestCategories(score)[0];
   const profileSummary = `Diet: ${profile.diet}, Transport: ${profile.transportMode} (${profile.commuteDistance}km), AC: ${profile.acUsage}, Shopping: ${profile.shoppingFrequency}, Location: ${profile.locationType}`;
-  const avoidList =
-    yesterdayMissions.length > 0
-      ? yesterdayMissions.join(', ')
-      : 'none';
+  const avoidList = yesterdayMissions.length > 0 ? yesterdayMissions.join(', ') : 'none';
 
   return `Generate exactly 3 daily sustainability missions for a user in India.
 Profile: ${profileSummary}

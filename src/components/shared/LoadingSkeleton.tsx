@@ -10,21 +10,12 @@ export function SkeletonLine({
   width?: string;
   height?: string;
 }) {
-  return (
-    <div
-      className="skeleton"
-      style={{ width, height }}
-      aria-hidden="true"
-    />
-  );
+  return <div className="skeleton" style={{ width, height }} aria-hidden="true" />;
 }
 
 export function SkeletonCard({ className = '' }: { className?: string }) {
   return (
-    <div
-      className={`glass-card p-6 space-y-3 ${className}`}
-      aria-hidden="true"
-    >
+    <div className={`glass-card p-6 space-y-3 ${className}`} aria-hidden="true">
       <SkeletonLine width="60%" height="1.25rem" />
       <SkeletonLine width="100%" height="0.875rem" />
       <SkeletonLine width="80%" height="0.875rem" />
@@ -40,7 +31,11 @@ export function SkeletonScoreRing() {
       aria-label="Loading carbon score"
       aria-busy="true"
     >
-      <div className="skeleton rounded-full" style={{ width: 180, height: 180 }} aria-hidden="true" />
+      <div
+        className="skeleton rounded-full"
+        style={{ width: 180, height: 180 }}
+        aria-hidden="true"
+      />
       <SkeletonLine width="120px" height="1rem" />
     </div>
   );
@@ -48,10 +43,7 @@ export function SkeletonScoreRing() {
 
 export function SkeletonMissionCard() {
   return (
-    <div
-      className="glass-card p-5 space-y-4"
-      aria-hidden="true"
-    >
+    <div className="glass-card p-5 space-y-4" aria-hidden="true">
       <div className="flex items-start justify-between">
         <SkeletonLine width="70%" height="1.125rem" />
         <SkeletonLine width="60px" height="1.5rem" />

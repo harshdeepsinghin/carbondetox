@@ -1,6 +1,8 @@
 import {
   calculateCarbonScore,
   getWeakestCategories,
+  getScoreLabel,
+  getScoreColor,
 } from '@/lib/scoring/carbonScore';
 import type { UserProfile, CarbonScore } from '@/types';
 
@@ -145,5 +147,31 @@ describe('getWeakestCategories', () => {
     const weakest = getWeakestCategories(score);
     expect(weakest).toHaveLength(5);
     expect(new Set(weakest).size).toBe(5);
+  });
+});
+
+describe('getScoreLabel', () => {
+  it('returns correct label for different score ranges', () => {
+    expect(getScoreLabel(80)).toBe('Excellent');
+    expect(getScoreLabel(85)).toBe('Excellent');
+    expect(getScoreLabel(60)).toBe('Good');
+    expect(getScoreLabel(75)).toBe('Good');
+    expect(getScoreLabel(40)).toBe('Fair');
+    expect(getScoreLabel(55)).toBe('Fair');
+    expect(getScoreLabel(20)).toBe('Needs Work');
+    expect(getScoreLabel(35)).toBe('Needs Work');
+    expect(getScoreLabel(0)).toBe('Critical');
+    expect(getScoreLabel(15)).toBe('Critical');
+  });
+});
+
+describe('getScoreColor', () => {
+  it('returns correct color class for score ranges', () => {
+    expect(getScoreColor(70)).toBe('green');
+    expect(getScoreColor(85)).toBe('green');
+    expect(getScoreColor(40)).toBe('amber');
+    expect(getScoreColor(65)).toBe('amber');
+    expect(getScoreColor(0)).toBe('red');
+    expect(getScoreColor(35)).toBe('red');
   });
 });

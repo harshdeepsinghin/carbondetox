@@ -26,7 +26,9 @@ export default function SettingsPage() {
 
       {/* Account section */}
       <section aria-labelledby="account-heading" className="glass-card p-6 space-y-4">
-        <h2 id="account-heading" className="font-bold">Account</h2>
+        <h2 id="account-heading" className="font-bold">
+          Account
+        </h2>
         {userData && (
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
@@ -35,7 +37,9 @@ export default function SettingsPage() {
             </div>
             <div className="flex justify-between">
               <span style={{ color: 'var(--color-text-muted)' }}>Email</span>
-              <span>{userData.email ?? (userData.isAnonymous ? 'Guest account' : '—')}</span>
+              <span>
+                {userData.email ?? (userData.isAnonymous ? 'Guest account' : '—')}
+              </span>
             </div>
             <div className="flex justify-between">
               <span style={{ color: 'var(--color-text-muted)' }}>Account type</span>
@@ -43,7 +47,9 @@ export default function SettingsPage() {
             </div>
             <div className="flex justify-between">
               <span style={{ color: 'var(--color-text-muted)' }}>XP</span>
-              <span className="font-mono font-bold" style={{ color: '#fbbf24' }}>{userData.xp} XP</span>
+              <span className="font-mono font-bold" style={{ color: '#fbbf24' }}>
+                {userData.xp} XP
+              </span>
             </div>
           </div>
         )}
@@ -51,7 +57,9 @@ export default function SettingsPage() {
 
       {/* Profile section */}
       <section aria-labelledby="profile-heading" className="glass-card p-6 space-y-4">
-        <h2 id="profile-heading" className="font-bold">Carbon Profile</h2>
+        <h2 id="profile-heading" className="font-bold">
+          Carbon Profile
+        </h2>
         {profile && (
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
@@ -60,7 +68,9 @@ export default function SettingsPage() {
             </div>
             <div className="flex justify-between">
               <span style={{ color: 'var(--color-text-muted)' }}>Transport</span>
-              <span className="capitalize">{profile.transportMode} — {profile.commuteDistance}km</span>
+              <span className="capitalize">
+                {profile.transportMode} — {profile.commuteDistance}km
+              </span>
             </div>
             <div className="flex justify-between">
               <span style={{ color: 'var(--color-text-muted)' }}>Location</span>
@@ -71,7 +81,10 @@ export default function SettingsPage() {
         <button
           onClick={() => router.push('/onboarding')}
           className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold border transition-all text-sm"
-          style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+          style={{
+            borderColor: 'var(--color-border)',
+            color: 'var(--color-text-secondary)',
+          }}
         >
           <RefreshCw className="w-4 h-4" aria-hidden="true" />
           Update Assessment
@@ -81,11 +94,16 @@ export default function SettingsPage() {
       {/* Privacy */}
       <section aria-labelledby="privacy-heading" className="glass-card p-6 space-y-2">
         <h2 id="privacy-heading" className="font-bold flex items-center gap-2">
-          <Shield className="w-4 h-4" aria-hidden="true" style={{ color: 'var(--color-forest-light)' }} />
+          <Shield
+            className="w-4 h-4"
+            aria-hidden="true"
+            style={{ color: 'var(--color-forest-light)' }}
+          />
           Privacy
         </h2>
         <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-          Your data stays private and is stored securely on Firebase. We never sell, share, or monetise your personal information.
+          Your data stays private and is stored securely on Firebase. We never sell,
+          share, or monetise your personal information.
         </p>
       </section>
 
@@ -93,7 +111,11 @@ export default function SettingsPage() {
       <button
         onClick={handleSignOut}
         className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all"
-        style={{ background: 'rgba(239,68,68,0.1)', color: 'var(--color-danger)', border: '1px solid rgba(239,68,68,0.2)' }}
+        style={{
+          background: 'rgba(239,68,68,0.1)',
+          color: 'var(--color-danger)',
+          border: '1px solid rgba(239,68,68,0.2)',
+        }}
       >
         <LogOut className="w-4 h-4" aria-hidden="true" />
         Sign Out

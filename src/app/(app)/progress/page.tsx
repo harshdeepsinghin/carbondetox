@@ -18,12 +18,32 @@ const CATEGORIES: MissionCategory[] = [
 ];
 
 const BADGES = [
-  { id: 'first-mission', label: 'First Step', emoji: '🌱', description: 'Completed your first mission' },
+  {
+    id: 'first-mission',
+    label: 'First Step',
+    emoji: '🌱',
+    description: 'Completed your first mission',
+  },
   { id: 'week-streak', label: 'Week Warrior', emoji: '🔥', description: '7-day streak' },
   { id: 'month-streak', label: 'Habit Maker', emoji: '⚡', description: '30-day streak' },
-  { id: 'high-score', label: 'Green Champion', emoji: '🏆', description: 'Score above 80' },
-  { id: 'scanner', label: 'Smart Shopper', emoji: '🛒', description: 'Used the receipt scanner' },
-  { id: 'coach-10', label: 'Curious Mind', emoji: '💬', description: 'Sent 10 messages to the coach' },
+  {
+    id: 'high-score',
+    label: 'Green Champion',
+    emoji: '🏆',
+    description: 'Score above 80',
+  },
+  {
+    id: 'scanner',
+    label: 'Smart Shopper',
+    emoji: '🛒',
+    description: 'Used the receipt scanner',
+  },
+  {
+    id: 'coach-10',
+    label: 'Curious Mind',
+    emoji: '💬',
+    description: 'Sent 10 messages to the coach',
+  },
 ];
 
 export default function ProgressPage() {
@@ -32,7 +52,7 @@ export default function ProgressPage() {
 
   useEffect(() => {
     refresh();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -47,7 +67,9 @@ export default function ProgressPage() {
       {/* Streak section */}
       {userData && (
         <section aria-labelledby="streak-heading">
-          <h2 id="streak-heading" className="font-bold text-lg mb-4">Streak</h2>
+          <h2 id="streak-heading" className="font-bold text-lg mb-4">
+            Streak
+          </h2>
           <div className="glass-card p-6">
             <StreakBadge
               currentStreak={userData.currentStreak}
@@ -59,7 +81,9 @@ export default function ProgressPage() {
 
       {/* 30-day trend */}
       <section aria-labelledby="trend-heading">
-        <h2 id="trend-heading" className="font-bold text-lg mb-4">Score Trend (Last 30 Days)</h2>
+        <h2 id="trend-heading" className="font-bold text-lg mb-4">
+          Score Trend (Last 30 Days)
+        </h2>
         <div className="glass-card p-6">
           {loading ? (
             <div className="skeleton h-36 rounded-xl" aria-hidden="true" />
@@ -71,10 +95,14 @@ export default function ProgressPage() {
 
       {/* Category performance */}
       <section aria-labelledby="categories-heading">
-        <h2 id="categories-heading" className="font-bold text-lg mb-4">Current Category Scores</h2>
+        <h2 id="categories-heading" className="font-bold text-lg mb-4">
+          Current Category Scores
+        </h2>
         {!carbonScore ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {CATEGORIES.map((c) => <SkeletonCard key={c} />)}
+            {CATEGORIES.map((c) => (
+              <SkeletonCard key={c} />
+            ))}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -87,7 +115,9 @@ export default function ProgressPage() {
 
       {/* Badges */}
       <section aria-labelledby="badges-heading">
-        <h2 id="badges-heading" className="font-bold text-lg mb-4">Badges</h2>
+        <h2 id="badges-heading" className="font-bold text-lg mb-4">
+          Badges
+        </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {BADGES.map((badge) => {
             const earned = userData?.badges?.includes(badge.id) ?? false;
@@ -101,7 +131,9 @@ export default function ProgressPage() {
                 }}
                 aria-label={`${badge.label}${earned ? ' — earned' : ' — locked'}: ${badge.description}`}
               >
-                <span className="text-2xl" aria-hidden="true">{badge.emoji}</span>
+                <span className="text-2xl" aria-hidden="true">
+                  {badge.emoji}
+                </span>
                 <div>
                   <p className="font-semibold text-sm">{badge.label}</p>
                   <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
@@ -109,7 +141,9 @@ export default function ProgressPage() {
                   </p>
                 </div>
                 {!earned && (
-                  <span className="ml-auto text-lg" aria-hidden="true">🔒</span>
+                  <span className="ml-auto text-lg" aria-hidden="true">
+                    🔒
+                  </span>
                 )}
               </div>
             );

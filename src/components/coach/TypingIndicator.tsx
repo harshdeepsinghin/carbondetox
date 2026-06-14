@@ -8,7 +8,10 @@ export function TypingIndicator() {
   return (
     <div
       className="flex items-center gap-1.5 px-4 py-3 rounded-2xl rounded-bl-sm w-fit"
-      style={{ background: 'rgba(22,163,74,0.12)', border: '1px solid rgba(22,163,74,0.2)' }}
+      style={{
+        background: 'rgba(22,163,74,0.12)',
+        border: '1px solid rgba(22,163,74,0.2)',
+      }}
       role="status"
       aria-label="Coach is typing"
       aria-live="polite"

@@ -68,8 +68,6 @@ export async function signOut(): Promise<void> {
  * Subscribe to auth state changes.
  * @returns Unsubscribe function — call on component unmount to prevent memory leaks
  */
-export function onAuthStateChanged(
-  callback: (user: User | null) => void,
-): Unsubscribe {
+export function onAuthStateChanged(callback: (user: User | null) => void): Unsubscribe {
   return firebaseOnAuthStateChanged(auth, callback);
 }

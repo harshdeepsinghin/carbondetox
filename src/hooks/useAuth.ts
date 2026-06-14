@@ -53,7 +53,7 @@ export function useAuth(): UseAuthReturn {
     });
 
     return unsubscribe;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Create or update the user document on auth state change. */
@@ -65,9 +65,7 @@ export function useAuth(): UseAuthReturn {
 
       const userData: UserData = {
         uid: firebaseUser.uid,
-        name:
-          firebaseUser.displayName ??
-          (firebaseUser.isAnonymous ? 'Guest' : 'User'),
+        name: firebaseUser.displayName ?? (firebaseUser.isAnonymous ? 'Guest' : 'User'),
         email: firebaseUser.email,
         avatar: firebaseUser.photoURL,
         isAnonymous: firebaseUser.isAnonymous,
