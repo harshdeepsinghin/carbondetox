@@ -8,6 +8,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useChat } from '@/hooks/useChat';
 import { useMissions } from '@/hooks/useMissions';
 import { useUserStore } from '@/stores/userStore';
+import type { UserMission } from '@/types';
 import {
   getCarbonScores,
   saveUserData,
@@ -511,12 +512,19 @@ describe('Custom React Hooks', () => {
     });
 
     it('handles mission completion, awards XP, and updates streaks', async () => {
-      const mockMission = {
+      const mockMission: UserMission = {
+        uid: 'user-123',
         missionId: 'm1',
         title: 'Walk to work',
+        description: 'Walk instead of driving.',
+        category: 'transport',
         completed: false,
-        difficulty: 'easy' as const,
+        completedAt: null,
+        difficulty: 'easy',
+        impact: 'medium',
         xp: 10,
+        co2Saved: 0.5,
+        generatedDate: '2025-01-01',
       };
 
       (completeMission as jest.Mock).mockResolvedValueOnce(null);
@@ -545,12 +553,19 @@ describe('Custom React Hooks', () => {
     });
 
     it('reverts optimistic update if completeMission rejects', async () => {
-      const mockMission = {
+      const mockMission: UserMission = {
+        uid: 'user-123',
         missionId: 'm1',
         title: 'Walk to work',
+        description: 'Walk instead of driving.',
+        category: 'transport',
         completed: false,
-        difficulty: 'easy' as const,
+        completedAt: null,
+        difficulty: 'easy',
+        impact: 'medium',
         xp: 10,
+        co2Saved: 0.5,
+        generatedDate: '2025-01-01',
       };
 
       (completeMission as jest.Mock).mockRejectedValueOnce(new Error('Db write failed'));
