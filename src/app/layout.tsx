@@ -55,7 +55,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Inline script runs before first paint — prevents flash of wrong theme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var dark = stored ? stored === 'dark' : prefersDark;
+                  if (dark) document.documentElement.classList.add('dark');
+                } catch(e) {
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{ background: 'var(--color-surface)', color: 'var(--color-text-primary)' }}
@@ -63,7 +82,6 @@ export default function RootLayout({
         {children}
         <Toaster
           position="bottom-right"
-          theme="dark"
           toastOptions={{
             style: {
               background: 'var(--color-card)',

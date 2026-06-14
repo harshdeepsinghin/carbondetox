@@ -14,6 +14,7 @@ import {
   Menu,
   X,
 } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -57,16 +58,19 @@ export function Navbar() {
           <span className="font-bold gradient-text">CarbonDetox</span>
         </Link>
 
-        <button
-          onClick={() => setOpen(true)}
-          aria-label="Open navigation menu"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          className="p-2 rounded-lg transition-colors"
-          style={{ color: 'var(--color-text-secondary)' }}
-        >
-          <Menu className="w-6 h-6" aria-hidden="true" />
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen(true)}
+            aria-label="Open navigation menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            className="p-2 rounded-lg transition-colors"
+            style={{ color: 'var(--color-text-secondary)' }}
+          >
+            <Menu className="w-6 h-6" aria-hidden="true" />
+          </button>
+        </div>
       </header>
 
       {/* Drawer overlay */}

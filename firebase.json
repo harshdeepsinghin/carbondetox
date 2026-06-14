@@ -1,5 +1,15 @@
 {
   "firestore": {
     "rules": "firestore.rules"
+  },
+  "auth": {
+    "providers": {
+      "anonymous": true,
+      "emailPassword": false,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "CarbonDetox",
+        "supportEmail": "iamharshlucky@gmail.com"
+      }
+    }
   }
 }

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Leaf } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { getProfile } from '@/lib/firebase/firestore';
+import { ThemeToggle } from '@/components/shared/ThemeToggle';
 
 function LoginContent() {
   const router = useRouter();
@@ -17,10 +18,20 @@ function LoginContent() {
 
     async function redirect() {
       if (!user) return;
-      const profile = await getProfile(user.uid);
-      if (profile?.completedOnboarding) {
-        router.replace('/dashboard');
-      } else {
+      try {
+        // Anonymous users always go to onboarding — their profiles don't persist
+        if (user.isAnonymous) {
+          router.replace('/onboarding');
+          return;
+        }
+        const profile = await getProfile(user.uid);
+        if (profile?.completedOnboarding) {
+          router.replace('/dashboard');
+        } else {
+          router.replace('/onboarding');
+        }
+      } catch {
+        // Firestore unavailable — safe fallback to onboarding
         router.replace('/onboarding');
       }
     }
@@ -56,9 +67,14 @@ function LoginContent() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-6"
+      className="min-h-screen flex items-center justify-center px-6 relative"
       style={{ background: 'var(--color-surface)' }}
     >
+      {/* Theme toggle — top right */}
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"

@@ -50,6 +50,24 @@
   --transition-smooth: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ─── Light Mode Overrides ───────────────────────────────────────────────────── */
+html:not(.dark) {
+  --color-surface: #f8fafc;
+  --color-surface-2: #f1f5f9;
+  --color-card: #ffffff;
+  --color-card-hover: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-subtle: #f1f5f9;
+
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+  --color-text-inverse: #f1f5f9;
+
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-glow-green: 0 0 20px rgb(22 163 74 / 0.15);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -118,13 +136,18 @@
 
 /* ─── Utility Classes ───────────────────────────────────────────────────────── */
 
-/* Glass morphism card */
+/* Glass morphism card — adapts to light/dark via CSS vars */
 .glass-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--color-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.6);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
+}
+
+.dark .glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(51, 65, 85, 0.6);
 }
 
 /* Score color classes */

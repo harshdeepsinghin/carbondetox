@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MissionsRequestSchema } from '@/lib/utils/validation';
 import {
-  getProfile,
-  getLatestCarbonScore,
-  getMissions,
-  getYesterdayMissions,
-  saveMissions,
-  getTodayString,
-} from '@/lib/firebase/firestore';
+  getAdminProfile,
+  getAdminLatestCarbonScore,
+  getAdminMissions,
+  getAdminYesterdayMissions,
+  saveAdminMissions,
+} from '@/lib/firebase/firestoreAdmin';
+import { getTodayString } from '@/lib/firebase/firestore';
 import { generateMissions } from '@/lib/gemini/missions';
 import type { UserMission } from '@/types';
 
@@ -16,7 +16,16 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const body = await req.json() as unknown;
+    const text = await req.text();
+    if (!text) {
+      return NextResponse.json({ error: 'Missing request body' }, { status: 400 });
+    }
+    let body: unknown;
+    try {
+      body = JSON.parse(text);
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    }
     const parsed = MissionsRequestSchema.safeParse(body);
 
     if (!parsed.success) {
@@ -30,16 +39,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const today = getTodayString();
 
     // Check for existing missions today
-    const existing = await getMissions(uid, today);
+    const existing = await getAdminMissions(uid, today);
     if (existing.length > 0) {
       return NextResponse.json({ missions: existing });
     }
 
     // Fetch required context
     const [profile, score, yesterday] = await Promise.all([
-      getProfile(uid),
-      getLatestCarbonScore(uid),
-      getYesterdayMissions(uid),
+      getAdminProfile(uid),
+      getAdminLatestCarbonScore(uid),
+      getAdminYesterdayMissions(uid),
     ]);
 
     if (!profile || !score) {
@@ -63,10 +72,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }));
 
     // Persist to Firestore
-    await saveMissions(userMissions);
+    await saveAdminMissions(userMissions);
 
     return NextResponse.json({ missions: userMissions });
-  } catch {
+  } catch (err) {
+    console.error('Missions generation API error:', err);
     return NextResponse.json(
       { error: 'Failed to generate missions. Please try again.' },
       { status: 500 },

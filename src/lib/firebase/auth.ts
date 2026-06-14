@@ -1,6 +1,8 @@
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signInAnonymously as firebaseSignInAnonymously,
   signOut as firebaseSignOut,
   onAuthStateChanged as firebaseOnAuthStateChanged,
@@ -13,12 +15,37 @@ const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 /**
- * Sign in with Google using a popup window.
- * @throws FirebaseError on popup blocked or auth failure
+ * Sign in with Google.
+ * Uses popup on localhost (faster DX) and redirect on deployed domains
+ * (more reliable — avoids popup-blocked and third-party cookie issues).
  */
-export async function signInWithGoogle(): Promise<User> {
-  const result = await signInWithPopup(auth, googleProvider);
-  return result.user;
+export async function signInWithGoogle(): Promise<User | null> {
+  const isLocal =
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1');
+
+  if (isLocal) {
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
+  } else {
+    // On deployed domains, initiate a redirect — result handled on page load
+    await signInWithRedirect(auth, googleProvider);
+    return null; // Page will redirect away; caller should not await a user here
+  }
+}
+
+/**
+ * Call this on page mount to capture the result of a Google redirect sign-in.
+ * Returns the signed-in User, or null if no redirect sign-in is pending.
+ */
+export async function getGoogleRedirectResult(): Promise<User | null> {
+  try {
+    const result = await getRedirectResult(auth);
+    return result?.user ?? null;
+  } catch {
+    return null;
+  }
 }
 
 /**

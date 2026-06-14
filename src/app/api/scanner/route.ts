@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { adminBucket } from '@/lib/firebase/admin';
 import {
-  ref as storageRef,
-  uploadBytes,
-  getDownloadURL,
-} from 'firebase/storage';
-import { storage } from '@/lib/firebase/config';
-import { checkRateLimit } from '@/lib/utils/rateLimiter';
-import { saveReceipt } from '@/lib/firebase/firestore';
+  checkAdminRateLimit,
+  saveAdminReceipt,
+} from '@/lib/firebase/firestoreAdmin';
 import { analyzeReceipt } from '@/lib/gemini/scanner';
 import {
   ALLOWED_IMAGE_TYPES,
@@ -47,7 +44,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     // Rate limit
-    const allowed = await checkRateLimit(uid, 'scan', SCAN_DAILY_LIMIT);
+    const allowed = await checkAdminRateLimit(uid, 'scan', SCAN_DAILY_LIMIT);
     if (!allowed) {
       return NextResponse.json(
         { error: 'Daily scan limit reached (5/day). Try again tomorrow!' },
@@ -60,12 +57,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const buffer = Buffer.from(arrayBuffer);
     const base64 = buffer.toString('base64');
 
-    // Upload to Firebase Storage
+    // Upload to Firebase Storage via Admin SDK
     const timestamp = Date.now();
     const path = `receipts/${uid}/${timestamp}`;
-    const fileRef = storageRef(storage, path);
-    await uploadBytes(fileRef, buffer, { contentType: file.type });
-    const downloadUrl = await getDownloadURL(fileRef);
+    const fileRef = adminBucket.file(path);
+    await fileRef.save(buffer, {
+      metadata: { contentType: file.type },
+    });
+
+    // Get a long-lived download URL (signed URL expiring far in the future)
+    const [downloadUrl] = await fileRef.getSignedUrl({
+      action: 'read',
+      expires: '03-09-2491',
+    });
 
     // Analyze with Gemini Vision
     const analysis = await analyzeReceipt(base64, file.type);
@@ -78,7 +82,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     // Persist result
-    await saveReceipt({
+    await saveAdminReceipt({
       uid,
       imageUrl: downloadUrl,
       analysis,
@@ -86,7 +90,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     });
 
     return NextResponse.json({ analysis, imageUrl: downloadUrl });
-  } catch {
+  } catch (err) {
+    console.error('Scanner API error:', err);
     return NextResponse.json(
       { error: 'Scanner temporarily unavailable. Please try again.' },
       { status: 500 },

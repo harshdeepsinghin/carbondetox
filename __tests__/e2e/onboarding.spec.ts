@@ -47,14 +47,27 @@ test.describe('Guest Onboarding Flow', () => {
   });
 
   test('2. Missions page shows mission cards after onboarding', async ({ page }) => {
-    // Assume session is set from previous test (or re-run onboarding)
-    await page.goto('/missions');
+    // Navigate to landing page
+    await page.goto('/');
+    await page.getByRole('link', { name: 'Try as Guest' }).click();
 
-    // Wait for missions to load (either real cards or skeleton)
+    // Wait for login page to redirect (anonymous auth) → onboarding
+    await page.waitForURL(/\/onboarding/, { timeout: 15000 });
+
+    // Complete onboarding steps
+    for (let i = 0; i < 5; i++) {
+      await page.getByRole('button', { name: /Continue/i }).click();
+    }
+    await page.getByRole('button', { name: /Calculate My Score/i }).click();
+
+    // Wait for dashboard redirect
+    await page.waitForURL(/\/dashboard/, { timeout: 20000 });
+
+    // Go to missions page
+    await page.goto('/missions');
     await page.waitForTimeout(3000);
 
-    // Should see at least one mission card (or loading state)
-    const missionSection = page.getByRole('region', { name: /missions/i });
-    await expect(missionSection.or(page.getByRole('heading', { name: /Today/i }))).toBeVisible();
+    // Should see the missions page title
+    await expect(page.getByRole('heading', { name: "Today's Missions" })).toBeVisible();
   });
 });

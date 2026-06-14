@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
-  Leaf,
   BarChart3,
   MessageCircle,
   Target,
@@ -10,6 +9,7 @@ import {
   Shield,
   Globe,
 } from 'lucide-react';
+import { LandingNav } from '@/components/shared/LandingNav';
 
 export const metadata: Metadata = {
   title: 'CarbonDetox — AI Sustainability Coach for India',
@@ -54,37 +54,7 @@ const STATS = [
 export default function LandingPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--color-surface)' }}>
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-10 px-6 py-4 border-b" style={{
-        background: 'rgba(15,23,42,0.9)',
-        backdropFilter: 'blur(10px)',
-        borderColor: 'var(--color-border)',
-      }}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{ background: 'var(--color-forest)' }}
-              aria-hidden="true"
-            >
-              <Leaf className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold gradient-text">CarbonDetox</span>
-          </div>
-          <nav aria-label="Site navigation">
-            <Link
-              href="/login"
-              className="px-5 py-2 rounded-xl text-sm font-semibold transition-all"
-              style={{
-                background: 'var(--color-forest)',
-                color: 'white',
-              }}
-            >
-              Get Started
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <LandingNav />
 
       <main>
         {/* Hero */}

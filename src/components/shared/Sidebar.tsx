@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useUserStore } from '@/stores/userStore';
+import { ThemeToggle } from './ThemeToggle';
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -42,8 +43,8 @@ export function Sidebar() {
       }}
       aria-label="Main navigation"
     >
-      {/* Logo */}
-      <div className="p-6 border-b" style={{ borderColor: 'var(--color-border)' }}>
+      {/* Logo + Theme Toggle */}
+      <div className="p-4 border-b flex items-center justify-between" style={{ borderColor: 'var(--color-border)' }}>
         <Link
           href="/dashboard"
           className="flex items-center gap-2 no-underline"
@@ -58,6 +59,7 @@ export function Sidebar() {
           </div>
           <span className="font-bold text-lg gradient-text">CarbonDetox</span>
         </Link>
+        <ThemeToggle />
       </div>
 
       {/* Navigation */}

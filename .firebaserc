@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "hack2skill-a226e"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

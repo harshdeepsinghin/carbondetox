@@ -7,6 +7,7 @@ import {
   signInAnonymously,
   signOut,
   onAuthStateChanged,
+  getGoogleRedirectResult,
 } from '@/lib/firebase/auth';
 import { saveUserData, getUserData } from '@/lib/firebase/firestore';
 import { useUserStore } from '@/stores/userStore';
@@ -24,13 +25,20 @@ interface UseAuthReturn {
 /**
  * Hook for managing Firebase authentication state.
  * On first login, creates a user document in Firestore.
- * Handles both Google and anonymous auth flows.
+ * Handles Google popup (localhost) / redirect (deployed) and anonymous flows.
  */
 export function useAuth(): UseAuthReturn {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { setUserData, clearStore } = useUserStore();
+
+  // Capture pending redirect result on mount (Google redirect sign-in on prod)
+  useEffect(() => {
+    getGoogleRedirectResult().catch(() => {
+      // Errors handled silently; auth state listener will pick up the user
+    });
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(async (firebaseUser) => {
@@ -84,8 +92,20 @@ export function useAuth(): UseAuthReturn {
     setError(null);
     try {
       await signInWithGoogle();
+      // On deployed domains this initiates a redirect (page leaves);
+      // on localhost the popup resolves directly via onAuthStateChanged.
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Sign-in failed');
+      const msg = err instanceof Error ? err.message : 'Sign-in failed';
+      // Translate common Firebase error codes to human-readable messages
+      if (msg.includes('auth/unauthorized-domain')) {
+        setError('This domain is not authorised. Please sign in at the official site.');
+      } else if (msg.includes('auth/operation-not-allowed')) {
+        setError('Google sign-in is not yet configured. Please try guest access.');
+      } else if (msg.includes('auth/popup-blocked')) {
+        setError('Popup was blocked. Please allow popups and try again.');
+      } else {
+        setError(msg);
+      }
     }
   }, []);
 
@@ -94,7 +114,12 @@ export function useAuth(): UseAuthReturn {
     try {
       await signInAnonymously();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Guest sign-in failed');
+      const msg = err instanceof Error ? err.message : 'Guest sign-in failed';
+      if (msg.includes('auth/operation-not-allowed')) {
+        setError('Anonymous sign-in is not enabled. Please contact support.');
+      } else {
+        setError(msg);
+      }
     }
   }, []);
 

@@ -466,7 +466,7 @@ export function AssessmentStepper({
             color: 'white',
             opacity: saving ? 0.7 : 1,
           }}
-          aria-label={step === TOTAL_STEPS ? 'Calculate my carbon score' : 'Continue to next step'}
+          aria-label={step === TOTAL_STEPS ? 'Calculate My Score' : 'Continue to next step'}
         >
           {saving
             ? 'Calculating...'
