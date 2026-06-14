@@ -7,7 +7,6 @@ import {
   MissionSchema,
   GeneratedMissionsSchema,
   validateImageFile,
-  ALLOWED_IMAGE_TYPES,
   MAX_FILE_SIZE_BYTES,
 } from '@/lib/utils/validation';
 

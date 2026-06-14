@@ -16,14 +16,11 @@ import {
   getMissions,
   completeMission,
   updateUserData,
-  getTodayString,
 } from '@/lib/firebase/firestore';
 import {
   signInWithGoogle,
   signInAnonymously,
   signOut,
-  onAuthStateChanged,
-  getGoogleRedirectResult,
 } from '@/lib/firebase/auth';
 
 // Mock Zustand Store
@@ -53,6 +50,7 @@ jest.mock('@/lib/firebase/firestore', () => ({
 }));
 
 // Mock Firebase Auth functions
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let authStateCallback: ((user: any) => void) | null = null;
 jest.mock('@/lib/firebase/auth', () => ({
   signInWithGoogle: jest.fn(),
@@ -66,6 +64,7 @@ jest.mock('@/lib/firebase/auth', () => ({
 }));
 
 describe('Custom React Hooks', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let mockStoreState: any;
 
   beforeEach(() => {
@@ -131,6 +130,7 @@ describe('Custom React Hooks', () => {
     });
 
     it('computes fresh score and fetches history on refresh', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mockHistory = [{ overall: 85 } as any];
       (getCarbonScores as jest.Mock).mockResolvedValueOnce(mockHistory);
 

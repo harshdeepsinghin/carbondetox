@@ -1,5 +1,5 @@
 import { checkRateLimit, getRateLimitUsage } from '@/lib/utils/rateLimiter';
-import { doc, getDoc, setDoc, increment } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 // Mock firebase/firestore
 jest.mock('firebase/firestore', () => ({
